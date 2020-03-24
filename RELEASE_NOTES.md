@@ -1,4 +1,12 @@
 # RELEASE NOTES
+## Version 2.21
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|['acf8d2b'](https://github.com/chrisguest75/git_examples/commit/acf8d2b) |  'Chris Guest' |  'Fix line ending for head (#1055)'|
+|['43267d0'](https://github.com/chrisguest75/git_examples/commit/43267d0) |  'Chris Guest' |  'Update release notes'|
+
+
 ## Version 2.20
 
 | CommitId      | Author        | Summary       |

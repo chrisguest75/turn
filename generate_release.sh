@@ -32,6 +32,7 @@ git log  --pretty=format:"'%h', '%an', '%s'" 5144e24..7130ef6 > ./output/2.1.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 7130ef6..ab4ffc5 > ./output/2.2.txt
 git log  --pretty=format:"'%h', '%an', '%s'" ab4ffc5..8de801d > ./output/2.17.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 8de801d..5943833 > ./output/2.20.txt
+git log  --pretty=format:"'%h', '%an', '%s'" 5943833..acf8d2b > ./output/2.21.txt
 echo ""
 
 if [[ $1 == "release" ]]; then 
