@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+if [[ ! $(which gomplatee) ]]; then
+    echo "gomplate tool not found.  Please install and retry"
+    exit
+fi
+
+if [[ ! -d "./output" ]]; then
+    mkdir -p ./output
+fi 
+
 git log  --pretty=format:"%h %an%x09%s"
 
 git log  --pretty=format:"'%h', '%an', '%s'" 162856a..ea5f6b1 > ./output/1.0.txt
