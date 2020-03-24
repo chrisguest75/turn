@@ -5,6 +5,6 @@
 {{ $lines := . -}}
 {{ range ($lines | csv) -}}
 
-|[{{ index . 0 }}]({{ (datasource "version").repo_url }}/commit/{{ index . 0 | strings.ReplaceAll "'" "" }}) | {{ index . 1 }} | [{{ (index . 2) }}]( {{ (datasource "version").issues_url }}{{  regexp.Find "(#)([0-9]{1,4})" (index . 2)   }}) |
+|[{{ index . 0 | strings.ReplaceAll "'" "" }}]({{ (datasource "version").repo_url }}/commit/{{ index . 0 | strings.ReplaceAll "'" "" }}) | {{ index . 1 | strings.ReplaceAll "'" "" }} | [{{ index . 2 | strings.ReplaceAll "'" "" }}]({{ (datasource "version").issues_url }}{{ regexp.Find "(#)([0-9]{1,4})" (index . 2) | strings.ReplaceAll "#" "" }}) |
 {{ end }}
 

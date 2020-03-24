@@ -9,14 +9,14 @@ brew install gomplate
 ```
 
 ## TODO: 
+* Hyperlink issues
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
-* Hyperlink issues
 * @users for posting into slack. 
 * Zac wants the worms.
 * Allow for mulitple issues in subject.
-* Limit generation to  particular branch.
+* Limit generation to particular branch.
 * How do I get the gitconfig to automatically install? 
 
 ## Initiate the repo
