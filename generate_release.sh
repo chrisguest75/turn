@@ -14,4 +14,7 @@ for filename in ./output/*.txt; do
 done
 
 echo "# RELEASE NOTES" > RELEASE_NOTES.md
-cat ./output/*.md >> RELEASE_NOTES.md
+for filename in $(ls ./output | grep md | sort -Vr); do
+    cat "./output/${filename}" >> RELEASE_NOTES.md
+done
+
