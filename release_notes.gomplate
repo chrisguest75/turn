@@ -5,6 +5,12 @@
 ```
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
-{{ range seq 0 300 }}| {{ . }}       | Chris Guest   | Improve the format (#1002) |
+{{ $lines := . -}}
+{{ range ($lines | csv) -}}
+|{{ index . 0 }} | {{ index . 1 }} | {{ index . 2 }}|
 {{ end }}
+
 ```
+
+
+
