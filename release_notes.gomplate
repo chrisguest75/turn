@@ -5,5 +5,6 @@
 ```
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
-| 592cb3e       | Chris Guest   | Improve the format (#1002) |
+{{ range seq 0 300 }}| {{ . }}       | Chris Guest   | Improve the format (#1002) |
+{{ end }}
 ```
