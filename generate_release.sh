@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ ! $(which gomplatee) ]]; then
+if [[ ! $(which gomplate) ]]; then
     echo "gomplate tool not found.  Please install and retry"
     exit
 fi
