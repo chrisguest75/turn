@@ -12,5 +12,5 @@ git config --local --list
 
 Build a version 
 ```
-cat ./release_notes.gomplate | gomplate > ./version1.md
+cat ./release_notes.gomplate | gomplate > ./output/version1.md
 ```
