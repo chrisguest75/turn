@@ -11,4 +11,5 @@ for filename in ./output/*.txt; do
     cat ${filename} | gomplate --file ./release_notes.gomplate -c .=stdin://${version}.txt > ./output/${version}.md  
 done
 
-cat ./output/*.md > RELEASE_NOTES.md
+echo "# RELEASE NOTES" > RELEASE_NOTES.md
+cat ./output/*.md >> RELEASE_NOTES.md

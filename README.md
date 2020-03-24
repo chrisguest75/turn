@@ -14,6 +14,7 @@ Build a version
 
 TODO: 
     * The first commit is not included
+    * Add a githook for validating the commit format. 
 
 ```
 git log  --pretty=format:"'%h', '%an', '%s'" 
