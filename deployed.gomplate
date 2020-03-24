@@ -1,0 +1,8 @@
+## Deployment {{ (datasource "version").version }}
+
+:{{ (datasource "emojis").head }}-{{ (datasource "emojis").colours | random.Item }}:
+{{ $lines := . -}}
+{{ range ($lines | csv) -}}
+:{{ (datasource "emojis").body }}-{{ (datasource "emojis").colours | random.Item }}: [{{ index . 0 }}]({{ (datasource "version").url }}/commit/{{ index . 0 | strings.ReplaceAll "'" "" }}) {{ index . 1 }} {{ index . 2 }}  
+{{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
+

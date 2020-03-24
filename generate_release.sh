@@ -27,13 +27,27 @@ git log  --pretty=format:"'%h', '%an', '%s'" 5144e24..7130ef6 > ./output/2.1.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 7130ef6..ab4ffc5 > ./output/2.2.txt
 git log  --pretty=format:"'%h', '%an', '%s'" ab4ffc5..8de801d > ./output/2.17.txt
 
+
+# TEMPLATE=./release_notes.gomplate
+
+# for filename in ./output/*.txt; do
+#     version=$(basename ${filename} .txt)
+#     echo "{'version':'${version}', 'url':'https://github.com/chrisguest75/git_examples'}" | gomplate --file ${TEMPLATE} -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
+# done
+
+# echo "# RELEASE NOTES" > RELEASE_NOTES.md
+# for filename in $(ls ./output | grep md | sort -Vr); do
+#     cat "./output/${filename}" >> RELEASE_NOTES.md
+# done
+
+TEMPLATE=./deployed.gomplate
+
 for filename in ./output/*.txt; do
     version=$(basename ${filename} .txt)
-    echo "{'version':'${version}', 'url':'https://github.com/chrisguest75/git_examples'}" | gomplate --file ./release_notes.gomplate -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
+    echo "{'version':'${version}', 'url':'https://github.com/chrisguest75/git_examples'}" | gomplate --file ${TEMPLATE} -c emojis=deployment_emojis.json -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
 done
 
-echo "# RELEASE NOTES" > RELEASE_NOTES.md
+echo "# DEPLOYMENTS" > DEPLOYMENTS.md
 for filename in $(ls ./output | grep md | sort -Vr); do
-    cat "./output/${filename}" >> RELEASE_NOTES.md
+    cat "./output/${filename}" >> DEPLOYMENTS.md
 done
-
