@@ -3,8 +3,11 @@
 
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
-|['8df2c45'](https://github.com/chrisguest75/git_examples/commit/8df2c45) |  'Chris Guest' |  'Fix the typo in the generate script (#1034)'|
-|['0a2aa34'](https://github.com/chrisguest75/git_examples/commit/0a2aa34) |  'Chris Guest' |  'Fix output directory not being created (#1034)'|
+|['8de801d'](https://github.com/chrisguest75/git_examples/commit/8de801d) |  'Chris Guest' |  'Fix output directory not being created - generate notes pre-merge (#1034)'|
+|['fe625ba'](https://github.com/chrisguest75/git_examples/commit/fe625ba) |  'Chris Guest' |  'Fix output directory not being created - generate notes pre-merge (#1034)'|
+|['2e8e592'](https://github.com/chrisguest75/git_examples/commit/2e8e592) |  'Chris Guest' |  'Merge branch 'master' of github.com:chrisguest75/git_examples'|
+|['572a580'](https://github.com/chrisguest75/git_examples/commit/572a580) |  'Christopher Guest' |  'Fix output directory not being created - generate notes pre-merge (#1034)'|
+|['d3d06db'](https://github.com/chrisguest75/git_examples/commit/d3d06db) |  'Christopher Guest' |  'Fix bugs (#1)'|
 
 
 ## Version 2.2
