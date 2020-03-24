@@ -8,7 +8,7 @@ git log  --pretty=format:"'%h', '%an', '%s'" 0ea7306..acf1304 > ./output/1.2.txt
 
 for filename in ./output/*.txt; do
     version=$(basename ${filename} .txt)
-    cat ${filename} | gomplate --file ./release_notes.gomplate -c .=stdin://${version}.txt > ./output/${version}.md  
+    echo "{'version':'${version}'}" | gomplate --file ./release_notes.gomplate -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
 done
 
 echo "# RELEASE NOTES" > RELEASE_NOTES.md
