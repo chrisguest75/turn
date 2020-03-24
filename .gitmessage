@@ -1,12 +1,5 @@
-########50 characters############################
-Subject
-########72 characters##################################################
-Ticket #XXXX
-Problem
- # Problem, Task, Reason for Commit
+Subject (50 chars) (#include ticket) 
 
-Solution
- # Solution or List of Changes
-
-Note
- # Special instructions, testing steps, rake, etc
+Problem (Reason for Commit)
+Solution (List of Changes)
+Notes (Special Instructions, Testing Steps, etc)
