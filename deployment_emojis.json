@@ -1,0 +1,6 @@
+{
+      "colours": ["red", "pink", "grey", "blue", "black", "white", "brown", "green", "purple"],
+      "head" : "worm-vert-head",
+      "body" : "worm-vert-body",
+      "tail" : "worm-vert-tail"
+}

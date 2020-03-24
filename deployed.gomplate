@@ -1,0 +1,9 @@
+## Deployment {{ (datasource "version").version }}
+
+:{{ (datasource "emojis").head }}-{{ (datasource "emojis").colours | random.Item }}:   
+{{ $lines := . -}}
+{{ range ($lines | csv) -}}
+:{{ (datasource "emojis").body }}-{{ (datasource "emojis").colours | random.Item }}: [{{ index . 0 | strings.ReplaceAll "'" "" }}]({{ (datasource "version").repo_url }}/commit/{{ index . 0 | strings.ReplaceAll "'" "" }}) {{ index . 1 | strings.ReplaceAll "'" "" }} [{{ index . 2 | strings.ReplaceAll "'" "" }}]({{ (datasource "version").issues_url }}{{ regexp.Find "(#)([0-9]{1,4})" (index . 2) | strings.ReplaceAll "#" "" }})
+
+{{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
+
