@@ -1,4 +1,14 @@
 # RELEASE NOTES
+## Version 2.1
+
+```
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|'7130ef6' |  'Chris Guest' |  'Reverse the order of the release notes (#1016)'|
+|'910531e' |  'Chris Guest' |  'Add more versions  (#1014)'|
+
+```
+
 ## Version 2.0
 
 ```
