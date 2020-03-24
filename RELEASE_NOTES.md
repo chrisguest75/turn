@@ -1,4 +1,24 @@
 # RELEASE NOTES
+## Version 2.17
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|['8de801d'](https://github.com/chrisguest75/git_examples/commit/8de801d) |  'Chris Guest' |  'Fix output directory not being created - generate notes pre-merge (#1034)'|
+|['fe625ba'](https://github.com/chrisguest75/git_examples/commit/fe625ba) |  'Chris Guest' |  'Fix output directory not being created - generate notes pre-merge (#1034)'|
+|['2e8e592'](https://github.com/chrisguest75/git_examples/commit/2e8e592) |  'Chris Guest' |  'Merge branch 'master' of github.com:chrisguest75/git_examples'|
+|['572a580'](https://github.com/chrisguest75/git_examples/commit/572a580) |  'Christopher Guest' |  'Fix output directory not being created - generate notes pre-merge (#1034)'|
+|['d3d06db'](https://github.com/chrisguest75/git_examples/commit/d3d06db) |  'Christopher Guest' |  'Fix bugs (#1)'|
+
+
+## Version 2.2
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|['ab4ffc5'](https://github.com/chrisguest75/git_examples/commit/ab4ffc5) |  'Chris Guest' |  'Fix tables in markdown (#1023)'|
+|['8cd97b7'](https://github.com/chrisguest75/git_examples/commit/8cd97b7) |  'Chris Guest' |  'Update instructions (#1020)'|
+|['41100cc'](https://github.com/chrisguest75/git_examples/commit/41100cc) |  'Chris Guest' |  'Update release notes (#1017)'|
+
+
 ## Version 2.1
 
 | CommitId      | Author        | Summary       |

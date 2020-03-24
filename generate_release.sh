@@ -5,8 +5,23 @@ if [[ -f .env ]];then
     . .env
 fi 
 
-git log  --pretty=format:"%h %an%x09%s"
+if [[ ! $(which gomplate) ]]; then
+    echo "gomplate tool not found.  Please install and retry"
+    exit
+fi
 
+if [[ ! -d "./output" ]]; then
+    mkdir -p ./output
+fi 
+
+git log -n 1 --pretty=format:"%d" 
+echo ""
+git log --pretty=format:"%h %an%x09%s" $(git merge-base HEAD origin/master)..HEAD
+echo ""
+echo ""
+git log -n 1 --pretty=format:"%d" master
+echo ""
+git log --pretty=format:"%h %an%x09%s" master
 echo ""
 echo "* Creating version logs"
 git log  --pretty=format:"'%h', '%an', '%s'" 162856a..ea5f6b1 > ./output/1.0.txt
@@ -16,6 +31,7 @@ git log  --pretty=format:"'%h', '%an', '%s'" acf1304..58ee502 > ./output/1.3.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 58ee502..5144e24 > ./output/2.0.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 5144e24..7130ef6 > ./output/2.1.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 7130ef6..ab4ffc5 > ./output/2.2.txt
+git log  --pretty=format:"'%h', '%an', '%s'" ab4ffc5..8de801d > ./output/2.17.txt
 
 echo "* Building version markdown"
 for filename in ./output/*.txt; do
