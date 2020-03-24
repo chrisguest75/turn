@@ -8,6 +8,7 @@ TODO:
 * Hyperlink issues
 * @users for posting into slack. 
 * Zac wants the worms.
+* Allow for mulitple issues in subject.
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 
