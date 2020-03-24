@@ -1,11 +1,9 @@
 ## Version {{ (datasource "version").version }}
 
-```
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
 {{ $lines := . -}}
 {{ range ($lines | csv) -}}
-|{{ index . 0 }} | {{ index . 1 }} | {{ index . 2 }}|
+|[{{ index . 0 }}]({{ (datasource "version").url }}/commit/{{ index . 0 | strings.ReplaceAll "'" "" }}) | {{ index . 1 }} | {{ index . 2 }}|
 {{ end }}
-```
 

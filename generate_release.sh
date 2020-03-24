@@ -11,7 +11,7 @@ git log  --pretty=format:"'%h', '%an', '%s'" 5144e24..7130ef6 > ./output/2.1.txt
 
 for filename in ./output/*.txt; do
     version=$(basename ${filename} .txt)
-    echo "{'version':'${version}'}" | gomplate --file ./release_notes.gomplate -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
+    echo "{'version':'${version}', 'url':'https://github.com/chrisguest75/git_examples'}" | gomplate --file ./release_notes.gomplate -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
 done
 
 echo "# RELEASE NOTES" > RELEASE_NOTES.md

@@ -5,8 +5,6 @@ TODO:
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
-* Fix the tables output
-* Hyperlink commits
 * Hyperlink issues
 * @users for posting into slack. 
 * Zac wants the worms.
