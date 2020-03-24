@@ -1,13 +1,23 @@
 # README
-Demonsrates a way to produce release notes for a repo. 
+Demonstrates a way to produce release notes for a repo. 
 
-TODO: 
+## Prequisites
+You'll need to have gomplates installed 
+
+```sh
+brew install gomplate
+```
+
+## TODO: 
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
 * Hyperlink issues
 * @users for posting into slack. 
 * Zac wants the worms.
+* Limit generation to  particular branch.
+* How do I get the gitconfig to automatically install? 
+
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 

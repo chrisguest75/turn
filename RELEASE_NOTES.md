@@ -1,4 +1,21 @@
 # RELEASE NOTES
+## Version 2.17
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|['8df2c45'](https://github.com/chrisguest75/git_examples/commit/8df2c45) |  'Chris Guest' |  'Fix the typo in the generate script (#1034)'|
+|['0a2aa34'](https://github.com/chrisguest75/git_examples/commit/0a2aa34) |  'Chris Guest' |  'Fix output directory not being created (#1034)'|
+
+
+## Version 2.2
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|['ab4ffc5'](https://github.com/chrisguest75/git_examples/commit/ab4ffc5) |  'Chris Guest' |  'Fix tables in markdown (#1023)'|
+|['8cd97b7'](https://github.com/chrisguest75/git_examples/commit/8cd97b7) |  'Chris Guest' |  'Update instructions (#1020)'|
+|['41100cc'](https://github.com/chrisguest75/git_examples/commit/41100cc) |  'Chris Guest' |  'Update release notes (#1017)'|
+
+
 ## Version 2.1
 
 | CommitId      | Author        | Summary       |
