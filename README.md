@@ -16,6 +16,7 @@ brew install gomplate
 * @users for posting into slack. 
 * Zac wants the worms.
 * Limit generation to  particular branch.
+* How do I get the gitconfig to automatically install? 
 
 
 ## Initiate the repo

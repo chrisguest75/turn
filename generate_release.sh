@@ -9,7 +9,14 @@ if [[ ! -d "./output" ]]; then
     mkdir -p ./output
 fi 
 
-git log  --pretty=format:"%h %an%x09%s"
+git log -n 1 --pretty=format:"%d" 
+echo ""
+git log --pretty=format:"%h %an%x09%s" $(git merge-base HEAD origin/master)..HEAD
+echo ""
+echo ""
+git log -n 1 --pretty=format:"%d" master
+echo ""
+git log --pretty=format:"%h %an%x09%s" master
 
 git log  --pretty=format:"'%h', '%an', '%s'" 162856a..ea5f6b1 > ./output/1.0.txt
 git log  --pretty=format:"'%h', '%an', '%s'" ea5f6b1..0ea7306 > ./output/1.1.txt
@@ -17,6 +24,8 @@ git log  --pretty=format:"'%h', '%an', '%s'" 0ea7306..acf1304 > ./output/1.2.txt
 git log  --pretty=format:"'%h', '%an', '%s'" acf1304..58ee502 > ./output/1.3.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 58ee502..5144e24 > ./output/2.0.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 5144e24..7130ef6 > ./output/2.1.txt
+git log  --pretty=format:"'%h', '%an', '%s'" 7130ef6..ab4ffc5 > ./output/2.2.txt
+git log  --pretty=format:"'%h', '%an', '%s'" ab4ffc5..8df2c45 > ./output/2.17.txt
 
 for filename in ./output/*.txt; do
     version=$(basename ${filename} .txt)
