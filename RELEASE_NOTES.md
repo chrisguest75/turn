@@ -1,4 +1,12 @@
 # RELEASE NOTES
+## Version 2.20
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|['5943833'](https://github.com/chrisguest75/git_examples/commit/5943833) |  'Christopher Guest' |  'Work on a deployment list (#1054)'|
+|['e5c0e34'](https://github.com/chrisguest75/git_examples/commit/e5c0e34) |  'Chris Guest' |  'Update release notes'|
+
+
 ## Version 2.17
 
 | CommitId      | Author        | Summary       |
