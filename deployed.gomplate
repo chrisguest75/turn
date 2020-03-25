@@ -3,7 +3,16 @@
 :{{ (datasource "emojis").head }}-{{ (datasource "emojis").colours | random.Item }}:   
 {{ $lines := . -}}
 {{ range ($lines | csv) -}}
-:{{ (datasource "emojis").body }}-{{ (datasource "emojis").colours | random.Item }}: [{{ index . 0 | strings.ReplaceAll "'" "" }}]({{ (datasource "version").repo_url }}/commit/{{ index . 0 | strings.ReplaceAll "'" "" }}) {{ index . 1 | strings.ReplaceAll "'" "" }} [{{ index . 2 | strings.ReplaceAll "'" "" }}]({{ (datasource "version").issues_url }}{{ regexp.Find "(#)([0-9]{1,4})" (index . 2) | strings.ReplaceAll "#" "" }})
-
+{{- $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
+{{- $commitid := (index . 0 | strings.ReplaceAll "'" "") -}}
+{{- $commiturl := (print (datasource "version").repo_url "/commit/" $commitid) -}}
+{{- $author := (index . 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
+{{- $authorremap := (index (datasource "users").users $author) -}}
+{{- $subject := (index . 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
+{{- $issueid := regexp.Find "(#)([0-9]{1,4})" (index . 2) -}}
+{{- $issueurl :=  print (datasource "version").issues_url ($issueid | strings.ReplaceAll "#" "") -}}
+{{- $issuehyperlink :=  print "[" $issueid "](" $issueurl ")" -}}
+{{- $hyperlinkedsubject := ($subject | strings.ReplaceAll $issueid $issuehyperlink) -}}
+{{ print ":" $worm ":" }} [{{ print $commitid }}]({{ print $commiturl }}) {{ print $authorremap }} {{ print $hyperlinkedsubject }}   
 {{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
 
