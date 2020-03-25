@@ -9,10 +9,22 @@
 {{- $author := (index . 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
 {{- $authorremap := (index (datasource "users").users $author) -}}
 {{- $subject := (index . 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
-{{- $issueid := regexp.Find "(#)([0-9]{1,4})" (index . 2) -}}
-{{- $issueurl :=  print (datasource "version").issues_url ($issueid | strings.ReplaceAll "#" "") -}}
-{{- $issuehyperlink :=  print "[" $issueid "](" $issueurl ")" -}}
-{{- $hyperlinkedsubject := ($subject | strings.ReplaceAll $issueid $issuehyperlink) -}}
+{{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index . 2) -}}
+{{- $hyperlinkedsubject := $subject -}}
+{{- if $issueid -}}
+    {{- $processed := "" -}}
+    {{- $processed = $subject -}}
+    {{- range $issueid -}}
+        {{- $id := . -}}
+        {{- $issueurl := print (datasource "version").issues_url ($id | strings.ReplaceAll "#" "") -}}
+        {{- $issuehyperlink :=  print "[" $id "](" $issueurl ")" -}}
+        {{- $hyperlinkedsubject := ($processed | strings.ReplaceAll $id $issuehyperlink) -}}
+        {{- $processed = $hyperlinkedsubject -}}
+    {{- end -}}
+    {{- $hyperlinkedsubject = $processed -}}
+{{- else -}}
+    {{ /* print "No issues" */ }}
+{{- end -}}
 {{ print ":" $worm ":" }} [{{ print $commitid }}]({{ print $commiturl }}) {{ print $authorremap }} {{ print $hyperlinkedsubject }}   
 {{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
 
