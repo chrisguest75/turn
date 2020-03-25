@@ -12,10 +12,10 @@ brew install gomplate
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
-* Allow for mulitple issues in subject.
 * Limit generation to particular branch.
 * How do I get the gitconfig to automatically install? 
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
+
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 
@@ -49,7 +49,11 @@ Notes (Special Instructions, Testing Steps, etc)
 Running the ./generate_release.sh will list out the current commits. 
 
 ```sh
-./generate_release.sh
+# generate RELEASE_MOTES.md
+./generate_release.sh release
+
+# generate DEPLOYMENTS.md
+./generate_release.sh deployment
 ```
 
 Versions are listed as ranges.  These are then reverse sorted and added to the [RELEASE_NOTES.md](./RELEASE_NOTES.md)  

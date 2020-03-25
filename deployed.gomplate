@@ -12,26 +12,19 @@
 {{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index . 2) -}}
 {{- $hyperlinkedsubject := $subject -}}
 {{- if $issueid -}}
-    {{- /* print $issueid */ -}}
-    {{ $processed := "" }}
-    {{ $processed = $subject }}
-    {{ range $issueid -}}
-        {{ print "processed" $processed }}
-        {{ $id := . }}
-        {{ print $id }}
+    {{- $processed := "" -}}
+    {{- $processed = $subject -}}
+    {{- range $issueid -}}
+        {{- $id := . -}}
         {{- $issueurl := print (datasource "version").issues_url ($id | strings.ReplaceAll "#" "") -}}
-        {{ print $issueurl }}
         {{- $issuehyperlink :=  print "[" $id "](" $issueurl ")" -}}
-        {{ print $issuehyperlink }}
         {{- $hyperlinkedsubject := ($processed | strings.ReplaceAll $id $issuehyperlink) -}}
-        {{- $processed := $hyperlinkedsubject -}}
-        {{ print "processed" $processed }}
-    {{ end }}
-    {{ $hyperlinkedsubject := $processed }}
+        {{- $processed = $hyperlinkedsubject -}}
+    {{- end -}}
+    {{- $hyperlinkedsubject = $processed -}}
 {{- else -}}
-    {{ print "No issues" }}
+    {{ /* print "No issues" */ }}
 {{- end -}}
-{{ print $hyperlinkedsubject }}
 {{ print ":" $worm ":" }} [{{ print $commitid }}]({{ print $commiturl }}) {{ print $authorremap }} {{ print $hyperlinkedsubject }}   
 {{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
 
