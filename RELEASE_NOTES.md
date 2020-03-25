@@ -1,4 +1,13 @@
 # RELEASE NOTES
+## Version 3.0
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[6e6b77c](https://github.com/chrisguest75/git_examples/commit/6e6b77c)|@chris.guest|Fix multi issue subject lines with hyperlinks ([#1078](https://cnissues.atlassian.net/browse/LGH-1078))|
+|[3945396](https://github.com/chrisguest75/git_examples/commit/3945396)|@chris.guest|Add user mapping and fix hyperlinks ([#1070](https://cnissues.atlassian.net/browse/LGH-1070)) ([#4](https://cnissues.atlassian.net/browse/LGH-4))|
+|[94e963e](https://github.com/chrisguest75/git_examples/commit/94e963e)|@chris.guest|New release notes|
+|[99b5962](https://github.com/chrisguest75/git_examples/commit/99b5962)|@chris.guest|Update release notes|
+
 ## Version 2.22
 
 | CommitId      | Author        | Summary       |

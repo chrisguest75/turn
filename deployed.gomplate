@@ -23,7 +23,7 @@
     {{- end -}}
     {{- $hyperlinkedsubject = $processed -}}
 {{- else -}}
-    {{ /* print "No issues" */ }}
+    {{- /* print "No issues" */ -}}
 {{- end -}}
 {{ print ":" $worm ":" }} [{{ print $commitid }}]({{ print $commiturl }}) {{ print $authorremap }} {{ print $hyperlinkedsubject }}   
 {{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
