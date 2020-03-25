@@ -3,7 +3,10 @@
 if [[ -f .env ]];then
     echo "* Sourcing local .env"
     . .env
+else
+    echo "Warning no local .env found"
 fi
+
 if [[ -z $1 ]]; then 
     echo "Usage: generate_release.sh release|deployment"    
     exit 1
@@ -49,6 +52,7 @@ if [[ $1 == "release" ]]; then
         version=$(basename ${filename} .txt)
         echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
             gomplate --file ${TEMPLATE} \
+            -c users=user_mapping.json \
             -c version=stdin:///in.json \
             -c .=${filename} > ./output/${version}.md  
     done
@@ -68,6 +72,7 @@ elif [[ $1 == "deployment" ]]; then
         echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
             gomplate --file ${TEMPLATE} \
             -c emojis=deployment_emojis.json \
+            -c users=user_mapping.json \
             -c version=stdin:///in.json \
             -c .=${filename} > ./output/${version}.md  
     done

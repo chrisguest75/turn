@@ -69,3 +69,8 @@ Amending commits where you have forgot to add the ticket.
 ```
 git commit --amend
 ```
+
+## Debugging Templates Hint
+Clean the ./output directory and comment out all but one of the git log outputs.
+This makes the script run faster and allows quick testing of template modifications
+
