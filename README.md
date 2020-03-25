@@ -9,15 +9,13 @@ brew install gomplate
 ```
 
 ## TODO: 
-* Hyperlink issues
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
-* @users for posting into slack. 
-* Zac wants the worms.
 * Allow for mulitple issues in subject.
 * Limit generation to particular branch.
 * How do I get the gitconfig to automatically install? 
+* Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 
