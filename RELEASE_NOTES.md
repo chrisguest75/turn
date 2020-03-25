@@ -1,4 +1,12 @@
 # RELEASE NOTES
+## Version 2.22
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[24781ca](https://github.com/chrisguest75/git_examples/commit/24781ca) |  Christopher Guest | [ Add environment for issue tracking links  (#1022) (#2)](https://cnissues.atlassian.net/browse/LGH-1022) |
+|[dba5e28](https://github.com/chrisguest75/git_examples/commit/dba5e28) |  Chris Guest | [ Update release notes](https://cnissues.atlassian.net/browse/LGH-) |
+
+
 ## Version 2.21
 
 | CommitId      | Author        | Summary       |

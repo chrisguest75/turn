@@ -38,6 +38,7 @@ git log  --pretty=format:"'%h', '%an', '%s'" 7130ef6..ab4ffc5 > ./output/2.2.txt
 git log  --pretty=format:"'%h', '%an', '%s'" ab4ffc5..8de801d > ./output/2.17.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 8de801d..5943833 > ./output/2.20.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 5943833..acf8d2b > ./output/2.21.txt
+git log  --pretty=format:"'%h', '%an', '%s'" acf8d2b..24781ca > ./output/2.22.txt
 echo ""
 
 if [[ $1 == "release" ]]; then 
@@ -46,7 +47,10 @@ if [[ $1 == "release" ]]; then
     echo "* Building version markdown"
     for filename in ./output/*.txt; do
         version=$(basename ${filename} .txt)
-        echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | gomplate --file ${TEMPLATE} -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
+        echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
+            gomplate --file ${TEMPLATE} \
+            -c version=stdin:///in.json \
+            -c .=${filename} > ./output/${version}.md  
     done
 
     echo "* Building final markdown"
@@ -61,7 +65,11 @@ elif [[ $1 == "deployment" ]]; then
     echo "* Building version markdown"
     for filename in ./output/*.txt; do
         version=$(basename ${filename} .txt)
-        echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | gomplate --file ${TEMPLATE} -c emojis=deployment_emojis.json -c version=stdin:///in.json -c .=${filename} > ./output/${version}.md  
+        echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
+            gomplate --file ${TEMPLATE} \
+            -c emojis=deployment_emojis.json \
+            -c version=stdin:///in.json \
+            -c .=${filename} > ./output/${version}.md  
     done
 
     echo "* Building final markdown"
