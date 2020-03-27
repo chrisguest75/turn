@@ -12,9 +12,16 @@ brew install gomplate
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
+* bring in ranges from a plugin?  tags, ranges, etc. circleci.... 
 * Limit generation to particular branch.
 * How do I get the gitconfig to automatically install? 
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
+* Use a temp directory to build if required - rather than output. 
+* notes directory
+* make it a full blown script. 
+* Detect #LGH-xxxx or #xxxx
+* If no username found then use the version stored. 
+* Output paths for the scripts.  
 
 
 ## Initiate the repo
@@ -33,7 +40,7 @@ git config --local --list
 You can also verify in VSCode by opening the repo directory and looking at the Source Control template commit.  
 
 ## Committing 
-You can create an exmaple commit by filling in the template. 
+You can create an example commit by filling in the template. 
 
 It contains fields for Subject, Problem, Solution, Notes.  You should also include the ticket in the subject as this is the line used to build the notes. 
 
@@ -50,14 +57,14 @@ Running the ./generate_release.sh will list out the current commits.
 
 ```sh
 # generate RELEASE_MOTES.md
-./generate_release.sh release
+./generate.sh release
 
 # generate DEPLOYMENTS.md
-./generate_release.sh deployment
+./generate.sh deployment
 ```
 
-Versions are listed as ranges.  These are then reverse sorted and added to the [RELEASE_NOTES.md](./RELEASE_NOTES.md)  
-```
+Versions are listed as ranges in the [./versions.md](./versions.md) file.  These are then reverse sorted and added to the [RELEASE_NOTES.md](./RELEASE_NOTES.md)  
+```sh
 git log  --pretty=format:"'%h', '%an', '%s'" 162856a..ea5f6b1 > ./output/1.0.txt
 git log  --pretty=format:"'%h', '%an', '%s'" ea5f6b1..0ea7306 > ./output/1.1.txt
 git log  --pretty=format:"'%h', '%an', '%s'" 0ea7306..acf1304 > ./output/1.2.txt
@@ -68,7 +75,7 @@ git log  --pretty=format:"'%h', '%an', '%s'" 5144e24..7130ef6 > ./output/2.1.txt
 
 ## Amending commits
 Amending commits where you have forgot to add the ticket.
-```
+```sh
 git commit --amend
 ```
 
