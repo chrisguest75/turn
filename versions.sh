@@ -26,4 +26,5 @@ function process() {
     git log  --pretty=format:"'%h', '%an', '%s'" 5943833..acf8d2b > ${basepath}2.21.txt
     git log  --pretty=format:"'%h', '%an', '%s'" acf8d2b..24781ca > ${basepath}2.22.txt
     git log  --pretty=format:"'%h', '%an', '%s'" 24781ca..6e6b77c > ${basepath}3.0.txt
+    git log  --pretty=format:"'%h', '%an', '%s'" 6e6b77c..25b9955 > ${basepath}3.1.txt
 }

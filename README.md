@@ -48,15 +48,19 @@ Notes (Special Instructions, Testing Steps, etc)
 ```
 
 ## Build release notes 
-Running the ./generate_release.sh will list out the current commits. 
+Running the ./generate.sh will list out the current commits. 
 
 ```sh
+# generate RELEASE_MOTES.md & DEPLOYMENTS.md
+./generate.sh --action=create --type=ALL
+
 # generate RELEASE_MOTES.md
 ./generate.sh release
+./generate.sh --action=create --type=release
 
 # generate DEPLOYMENTS.md
-./generate.sh deployment
-```
+./generate.sh --action=create --type=deployment -o=../outputfolder
+ ```
 
 Versions are listed as ranges in the [./versions.md](./versions.md) file.  These are then reverse sorted and added to the [RELEASE_NOTES.md](./RELEASE_NOTES.md)  
 ```sh

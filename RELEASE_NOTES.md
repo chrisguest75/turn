@@ -1,4 +1,11 @@
 # RELEASE NOTES
+## Version 3.1
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[25b9955](https://github.com/chrisguest75/git_examples/commit/25b9955)|@chris.guest|Refactor ([#6](https://cnissues.atlassian.net/browse/LGH-6))|
+|[902a586](https://github.com/chrisguest75/git_examples/commit/902a586)|@chris.guest|Update release notes.|
+
 ## Version 3.0
 
 | CommitId      | Author        | Summary       |
