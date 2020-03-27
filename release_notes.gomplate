@@ -8,6 +8,9 @@
 {{- $commiturl := (print (datasource "version").repo_url "/commit/" $commitid) -}}
 {{- $author := (index . 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
 {{- $authorremap := (index (datasource "users").users $author) -}}
+{{- if not $authorremap -}}
+    {{- $authorremap = $author -}}
+{{- end -}}
 {{- $subject := (index . 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
 {{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index . 2) -}}
 {{- $hyperlinkedsubject := $subject -}}
