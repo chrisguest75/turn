@@ -12,17 +12,12 @@ brew install gomplate
 * The first commit is not included  
 * Add a githook for validating the commit format. 
 * Pull the versions from tags?
-* bring in ranges from a plugin?  tags, ranges, etc. circleci.... 
+* Add tags and circleci plugins to pull deployments.... 
 * Limit generation to particular branch.
-* How do I get the gitconfig to automatically install? 
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
 * Use a temp directory to build if required - rather than output. 
 * notes directory
-* make it a full blown script. 
 * Detect #LGH-xxxx or #xxxx
-* If no username found then use the version stored. 
-* Output paths for the scripts.  
-
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 

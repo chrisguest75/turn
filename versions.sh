@@ -12,6 +12,7 @@ function process() {
     if [[ -n $1 ]]; then 
         basepath=$1
     fi
+    basepath="${basepath}/"
 
     git log  --pretty=format:"'%h', '%an', '%s'" 162856a..ea5f6b1 > ${basepath}1.0.txt
     git log  --pretty=format:"'%h', '%an', '%s'" ea5f6b1..0ea7306 > ${basepath}1.1.txt
