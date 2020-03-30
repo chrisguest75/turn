@@ -1,4 +1,11 @@
 # RELEASE NOTES
+## Version 3.3
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[f0b2f1f](https://github.com/chrisguest75/git_examples/commit/f0b2f1f)|@chris.guest|Demonstrate the release process ([#1114](https://cnissues.atlassian.net/browse/LGH-1114))|
+|[558b0ec](https://github.com/chrisguest75/git_examples/commit/558b0ec)|@chris.guest|Update release notes and readme|
+
 ## Version 3.2
 
 | CommitId      | Author        | Summary       |
