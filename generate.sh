@@ -147,6 +147,7 @@ function main() {
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
+                            echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c users=user_mapping.json \
@@ -167,6 +168,7 @@ function main() {
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
+                            echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c emojis=deployment_emojis.json \
