@@ -16,7 +16,7 @@ brew install gomplate
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
 * Use a temp directory to build if required - rather than output. 
 * notes directory
-* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file
+* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file. another change.
 
 
 ## Initiate the repo
