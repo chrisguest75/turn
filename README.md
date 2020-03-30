@@ -16,7 +16,8 @@ brew install gomplate
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
 * Use a temp directory to build if required - rather than output. 
 * notes directory
-* Detect #LGH-xxxx or #xxxx - switch the format based on input value
+* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file
+
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 
