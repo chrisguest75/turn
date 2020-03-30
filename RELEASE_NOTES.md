@@ -1,4 +1,11 @@
 # RELEASE NOTES
+## Version 3.2
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[43ac9b1](https://github.com/chrisguest75/git_examples/commit/43ac9b1)|@chris.guest|Add a ranges file and a tags version ([#1110](https://cnissues.atlassian.net/browse/LGH-1110)) ([#1111](https://cnissues.atlassian.net/browse/LGH-1111)) ([#1112](https://cnissues.atlassian.net/browse/LGH-1112))|
+|[e62c7ae](https://github.com/chrisguest75/git_examples/commit/e62c7ae)|@chris.guest|Update release notes and readme.|
+
 ## Version 3.1
 
 | CommitId      | Author        | Summary       |
