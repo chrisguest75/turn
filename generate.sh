@@ -27,6 +27,7 @@ OPTIONS:
     -t --type                [release|deployment|ALL]
     -o --out                 Output path default "./"
     --debug                  
+    --tags                   Use tags rather than ranges                     
     --clean                  Clean the temporary folder                  
     -h --help                show this help
 
@@ -49,6 +50,7 @@ function main() {
     local TEMPORARY_FOLDER=./output/
     local OUTPUT_TYPE="ALL"
     local OUTPUT_LOCATION=./
+    local MODE="range"
 
     for i in "$@"
     do
@@ -70,7 +72,12 @@ function main() {
             # shellcheck disable=SC2034
             local -r DEBUG=true   
             shift # past argument=value
-        ;;   
+        ;; 
+        --tags)
+            # shellcheck disable=SC2034
+            local -r MODE="tag"   
+            shift # past argument=value
+        ;;           
         --clean)
             # shellcheck disable=SC2034
             local -r CLEAN=true   
@@ -125,7 +132,12 @@ function main() {
                 ;;
                 create)
                     echo "* Creating version logs"
-                    . ./versions.sh
+                    if [[ ${MODE} == "tag" ]]; then
+                        . ./tags.sh
+                    else
+                        . ./versions.sh
+                    fi
+
                     process "${TEMPORARY_FOLDER}"
                     echo ""
                     local PROCESSED=false
