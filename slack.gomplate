@@ -1,0 +1,50 @@
+{{- $message := print "Deployment" (datasource "version").version "\\n" -}}
+
+{{- $message = print $message ":" (datasource "emojis").head "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
+{{ $lines := . -}}
+{{ range ($lines | csv) -}}
+{{- $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
+{{- $commitid := (index . 0 | strings.ReplaceAll "'" "") -}}
+{{- $commiturl := (print (datasource "version").repo_url "/commit/" $commitid) -}}
+{{- $author := (index . 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
+{{- $authorremap := (index (datasource "users").users $author) -}}
+{{- if not $authorremap -}}
+    {{- $authorremap = $author -}}
+{{- end -}}
+{{- $subject := (index . 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
+{{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index . 2) -}}
+{{- $hyperlinkedsubject := $subject -}}
+{{- if $issueid -}}
+    {{- $processed := "" -}}
+    {{- $processed = $subject -}}
+    {{- range $issueid -}}
+        {{- $id := . -}}
+        {{- $issueurl := print (datasource "version").issues_url ($id | strings.ReplaceAll "#" "") -}}
+        {{- $issuehyperlink :=  print "<" $issueurl "|" $id ">" -}}
+        {{- $hyperlinkedsubject := ($processed | strings.ReplaceAll $id $issuehyperlink) -}}
+        {{- $processed = $hyperlinkedsubject -}}
+    {{- end -}}
+    {{- $hyperlinkedsubject = $processed -}}
+{{- else -}}
+    {{- /* print "No issues" */ -}}
+{{- end -}}
+{{- $message = print $message  ":" $worm ": <" $commiturl "|" $commitid "> " $authorremap " " $hyperlinkedsubject "\\n" -}}    
+{{- end -}}
+{{- $message = print $message ":" (datasource "emojis").tail "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
+{
+  "channel": "{{ (datasource "version").channel }}",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "{{ print $message}}"
+      }
+    }
+  ]
+}
+
+
+
+
+
