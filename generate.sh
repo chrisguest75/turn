@@ -24,7 +24,7 @@ usage: $SCRIPT_NAME options
 
 OPTIONS:
     -a --action              [create]
-    -t --type                [release|deployment|ALL]
+    -t --type                [release|deployment|slack|ALL]
     -o --out                 Output path default "./"
     --debug                  
     --tags                   Use tags rather than ranges                     
@@ -179,6 +179,26 @@ function main() {
                         echo "# DEPLOYMENTS" > DEPLOYMENTS.md
                         for filename in $(ls ${TEMPORARY_FOLDER} | grep md | sort -Vr); do
                             cat "${TEMPORARY_FOLDER}${filename}" >> ${OUTPUT_LOCATION}DEPLOYMENTS.md
+                        done
+                        PROCESSED=true
+                    fi
+                    if [[ "${OUTPUT_TYPE}" == "ALL" || "${OUTPUT_TYPE}" == "slack" ]]; then 
+                        TEMPLATE=./slack.gomplate
+
+                        echo "* Building version markdown in ${TEMPORARY_FOLDER}"
+                        for filename in ${TEMPORARY_FOLDER}*.txt; do
+                            version=$(basename ${filename} .txt)
+                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'channel':'${SLACK_CHANNEL}'}" | \
+                                gomplate --file ${TEMPLATE} \
+                                -c emojis=deployment_emojis.json \
+                                -c users=user_mapping.json \
+                                -c version=stdin:///in.json \
+                                -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
+                        done
+
+                        for filename in $(ls ${TEMPORARY_FOLDER} | grep md | sort -Vr | head -n 1); do
+                            echo "* Posting final markdown ${TEMPORARY_FOLDER}${filename}"
+                            curl -X POST -H "Content-type: application/json" -d @"${TEMPORARY_FOLDER}${filename}" ${SLACK_POST}
                         done
                         PROCESSED=true
                     fi
