@@ -19,7 +19,7 @@ If you're running this inside a CI/CD process in a container you'll need to make
 
 ## TODO: 
 * Fix when commit subjects have commas in them
-* Add git --no-pager to all of the commands..  
+* Fix tags order on this repo
 * Add a githook for validating the commit format. 
 * Add circleci plugins to pull deployments.... 
 * Limit generation to particular branch.
