@@ -112,3 +112,9 @@
 |[ea5f6b1](https://github.com/chrisguest75/git_examples/commit/ea5f6b1)|@chris.guest|Example table in markdown gomplate ([#1003](https://cnissues.atlassian.net/browse/LGH-1003))|
 |[592cb3e](https://github.com/chrisguest75/git_examples/commit/592cb3e)|@chris.guest|Improve the format ([#1002](https://cnissues.atlassian.net/browse/LGH-1002))|
 
+## Version 0.0
+
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[162856a](https://github.com/chrisguest75/git_examples/commit/162856a)|@chris.guest|A first test commit Ticket [#1001](https://cnissues.atlassian.net/browse/LGH-1001) Problem Im testing out the gitmessage|
+

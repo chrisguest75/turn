@@ -41,6 +41,10 @@ function process() {
     while IFS=, read -r rev1 rev2 version
     do
         echo "$(trim $version) is between $(trim $rev1) and $(trim $rev2)"
-        git log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev1)..$(trim $rev2) > ${basepath}$(trim $version).txt
+        if [[ "$(trim $rev1)" == "$(trim $rev2)" ]]; then
+            git --no-pager log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev2) > ${basepath}$(trim $version).txt
+        else
+            git --no-pager log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev1)..$(trim $rev2) > ${basepath}$(trim $version).txt
+        fi        
     done < ${ranges_filepath}
 }

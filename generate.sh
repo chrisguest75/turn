@@ -115,14 +115,22 @@ function main() {
             mkdir -p ${TEMPORARY_FOLDER}
         fi 
 
-        git log -n 1 --pretty=format:"%d" 
+        if [ "${DEBUG}" == true ] ; then
+            ls -al     
+            ls -al ../    
+            git --version
+            gomplate --version
+            git remote -v
+        fi
+
+        git --no-pager log -n 1 --pretty=format:"%d" 
         echo ""
-        git log --pretty=format:"%h %an%x09%s" $(git merge-base HEAD origin/master)..HEAD
+        git --no-pager log --pretty=format:"%h %an%x09%s" $(git --no-pager merge-base HEAD origin/master)..HEAD
         echo ""
         echo ""
-        git log -n 1 --pretty=format:"%d" master
+        git --no-pager log -n 1 --pretty=format:"%d" master
         echo ""
-        git log --pretty=format:"%h %an%x09%s" master
+        git --no-pager log --pretty=format:"%h %an%x09%s" master
         echo ""
 
         if [ "${ACTION}" ]; then
@@ -133,9 +141,19 @@ function main() {
                 create)
                     echo "* Creating version logs"
                     if [[ ${MODE} == "tag" ]]; then
-                        . ./tags.sh
+                        if [[ -f "./tags.sh" ]]; then
+                            . ./tags.sh
+                        else
+                            echo "./tags.sh not found"
+                            exit 1
+                        fi
                     else
-                        . ./versions.sh
+                        if [[ -f "./versions.sh" ]]; then
+                            . ./versions.sh
+                        else
+                            echo "./versions.sh not found"
+                            exit 1
+                        fi
                     fi
 
                     process "${TEMPORARY_FOLDER}"
@@ -147,6 +165,7 @@ function main() {
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
+                            echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c users=user_mapping.json \
@@ -167,6 +186,7 @@ function main() {
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
+                            echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c emojis=deployment_emojis.json \

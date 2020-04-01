@@ -2,21 +2,31 @@
 Demonstrates a way to produce release notes for a repo. 
 
 ## Prequisites
-You'll need to have gomplates installed 
+You'll need to have gomplates and git installed 
 
+Gomplates is available on all major package managers. 
 ```sh
 brew install gomplate
+apk add gomplates
+apt-get install gomplates
 ```
 
+If you're running this inside a CI/CD process in a container you'll need to make sure the tools are installed. 
+
+## Examples 
+[DEPLOYMENTS.md](./DEPLOYMENTS.md)  
+[RELEASE_NOTES.md](./RELEASE_NOTES.md)
+
 ## TODO: 
-* The first commit is not included  
+* Fix when commit subjects have commas in them
+* Fix tags order on this repo
 * Add a githook for validating the commit format. 
-* Add tags and circleci plugins to pull deployments.... 
+* Add circleci plugins to pull deployments.... 
 * Limit generation to particular branch.
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
 * Use a temp directory to build if required - rather than output. 
 * notes directory
-* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file. another change.
+* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file. 
 
 
 ## Initiate the repo
