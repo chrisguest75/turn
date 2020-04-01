@@ -18,9 +18,7 @@ If you're running this inside a CI/CD process in a container you'll need to make
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
-* Fix when commit subjects have commas in them
 * Fix tags order on this repo
-* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file. 
 * Add a githook for validating the commit format. 
 * Use a temp directory to build if required - rather than output. 
 * notes directory

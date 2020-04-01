@@ -13,7 +13,8 @@
     {{- $authorremap = $author -}}
 {{- end -}}
 {{- $subject := (index $fields 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
-{{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index $fields 2) -}}
+{{- $issueregex := (print "(" (datasource "version").issue_prefix ")([0-9]{1,4})") -}}
+{{- $issueid := regexp.FindAll $issueregex (index $fields 2) -}}
 {{- $hyperlinkedsubject := $subject -}}
 {{- if $issueid -}}
     {{- $processed := "" -}}
