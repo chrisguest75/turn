@@ -42,9 +42,9 @@ function process() {
     do
         echo "$(trim $version) is between $(trim $rev1) and $(trim $rev2)"
         if [[ "$(trim $rev1)" == "$(trim $rev2)" ]]; then
-            git log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev2) > ${basepath}$(trim $version).txt
+            git --no-pager log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev2) > ${basepath}$(trim $version).txt
         else
-            git log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev1)..$(trim $rev2) > ${basepath}$(trim $version).txt
+            git --no-pager log  --pretty=format:"'%h', '%an', '%s'" $(trim $rev1)..$(trim $rev2) > ${basepath}$(trim $version).txt
         fi        
     done < ${ranges_filepath}
 }

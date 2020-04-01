@@ -27,23 +27,23 @@ function process() {
     basepath="${basepath}/"
 
     echo "* Creating version logs"
-    git tag --list -n1 > ${basepath}/tags.tags    
+    git --no-pager tag --list -n1 > ${basepath}/tags.tags    
     local previous_tag=0.0
     #local depth=$(expr $(git rev-list --no-merges --count master) - 1)
-    local depth=$(git rev-list --no-merges --count master)
-    local previous_id=$(git rev-list -n 1 --no-merges master~${depth}) 
+    local depth=$(git --no-pager rev-list --no-merges --count master)
+    local previous_id=$(git --no-pager rev-list -n 1 --no-merges master~${depth}) 
     local current_tag=
     local current_id=
     while IFS= read -r version message
     do
         current_tag="$(trim $version)"
-        local current_id=$(git rev-list -n 1 ${current_tag})
+        local current_id=$(git --no-pager rev-list -n 1 ${current_tag})
         echo "$(trim $current_tag) is between $(trim $previous_id) and $(trim $current_id)"
 
         if [[ "$current_id" == "$previous_id" ]]; then
-            git log  --pretty=format:"'%h', '%an', '%s'" $(trim $current_id) > ${basepath}${current_tag}.txt
+            git --no-pager log --pretty=format:"'%h', '%an', '%s'" $(trim $current_id) > ${basepath}${current_tag}.txt
         else
-            git log  --pretty=format:"'%h', '%an', '%s'" $(trim $previous_id)..$(trim $current_id) > ${basepath}${current_tag}.txt
+            git --no-pager log --pretty=format:"'%h', '%an', '%s'" $(trim $previous_id)..$(trim $current_id) > ${basepath}${current_tag}.txt
         fi
         previous_tag=$current_tag
         previous_id=$current_id
