@@ -36,6 +36,16 @@
 {
   "channel": "{{ (datasource "version").channel }}",
   "blocks": [
+    {{- $metadata := (datasource "version").metadata -}}
+    {{- if $metadata -}}
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "{{ print $metadata}}"
+      }
+    },
+    {{- end -}}
     {
       "type": "section",
       "text": {
