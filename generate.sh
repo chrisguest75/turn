@@ -121,17 +121,19 @@ function main() {
             git --version
             gomplate --version
             git remote -v
+
+            #git --no-pager log -n 1 --pretty=format:"%d" 
+            #echo ""
+            #git --no-pager log --pretty=format:"%h %an%x09%s" $(git --no-pager merge-base HEAD origin/master)..HEAD
+            #echo ""
+            echo ""
+            git --no-pager log -n 1 --pretty=format:"%d" master
+            echo ""
+            git --no-pager log --pretty=format:"%h %an%x09%s" master
+            echo ""
         fi
 
-        git --no-pager log -n 1 --pretty=format:"%d" 
-        echo ""
-        git --no-pager log --pretty=format:"%h %an%x09%s" $(git --no-pager merge-base HEAD origin/master)..HEAD
-        echo ""
-        echo ""
-        git --no-pager log -n 1 --pretty=format:"%d" master
-        echo ""
-        git --no-pager log --pretty=format:"%h %an%x09%s" master
-        echo ""
+        readonly SEPERATOR=c80e53d155344a9dab87faad3884f679
 
         if [ "${ACTION}" ]; then
             case "${ACTION}" in
@@ -143,6 +145,7 @@ function main() {
                     if [[ ${MODE} == "tag" ]]; then
                         if [[ -f "./tags.sh" ]]; then
                             . ./tags.sh
+                            process "${TEMPORARY_FOLDER}" 
                         else
                             echo "./tags.sh not found"
                             exit 1
@@ -150,13 +153,13 @@ function main() {
                     else
                         if [[ -f "./versions.sh" ]]; then
                             . ./versions.sh
+                            process "${TEMPORARY_FOLDER}" "./ranges.csv"
                         else
                             echo "./versions.sh not found"
                             exit 1
                         fi
                     fi
 
-                    process "${TEMPORARY_FOLDER}"
                     echo ""
                     local PROCESSED=false
                     if [[ "${OUTPUT_TYPE}" == "ALL" || "${OUTPUT_TYPE}" == "release" ]]; then 
@@ -166,7 +169,7 @@ function main() {
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
                             echo "${version}"
-                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
+                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}'}" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c users=user_mapping.json \
                                 -c version=stdin:///in.json \
@@ -187,7 +190,7 @@ function main() {
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
                             echo "${version}"
-                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}'}" | \
+                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}'}" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c emojis=deployment_emojis.json \
                                 -c users=user_mapping.json \
@@ -208,7 +211,7 @@ function main() {
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
                             version=$(basename ${filename} .txt)
-                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'channel':'${SLACK_CHANNEL}'}" | \
+                            echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'channel':'${SLACK_CHANNEL}', 'seperator':'${SEPERATOR}' }" | \
                                 gomplate --file ${TEMPLATE} \
                                 -c emojis=deployment_emojis.json \
                                 -c users=user_mapping.json \
