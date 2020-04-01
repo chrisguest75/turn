@@ -20,14 +20,13 @@ If you're running this inside a CI/CD process in a container you'll need to make
 ## TODO: 
 * Fix when commit subjects have commas in them
 * Fix tags order on this repo
+* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file. 
 * Add a githook for validating the commit format. 
+* Use a temp directory to build if required - rather than output. 
+* notes directory
 * Add circleci plugins to pull deployments.... 
 * Limit generation to particular branch.
 * Add a pullrequest template https://help.github.com/en/github/building-a-strong-community/creating-a-pull-request-template-for-your-repository
-* Use a temp directory to build if required - rather than output. 
-* notes directory
-* Detect #LGH-xxxx or #xxxx - switch the format based on input value provide this in .env file. 
-
 
 ## Initiate the repo
 Copy the .gitmessage and install into the local reop.  This can be done globally.  But then it affects all repos. 

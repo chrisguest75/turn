@@ -1,18 +1,19 @@
 {{- $message := print "Deployment" (datasource "version").version "\\n" -}}
 
 {{- $message = print $message ":" (datasource "emojis").head "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
-{{ $lines := . -}}
+{{- $lines := (. | strings.ReplaceAll "," " " | strings.ReplaceAll (datasource "version").seperator ", ") }}
 {{ range ($lines | csv) -}}
+{{- $fields := . -}}
 {{- $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
-{{- $commitid := (index . 0 | strings.ReplaceAll "'" "") -}}
+{{- $commitid := (index $fields 0 | strings.ReplaceAll "'" "") -}}
 {{- $commiturl := (print (datasource "version").repo_url "/commit/" $commitid) -}}
-{{- $author := (index . 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
+{{- $author := (index $fields 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
 {{- $authorremap := (index (datasource "users").users $author) -}}
 {{- if not $authorremap -}}
     {{- $authorremap = $author -}}
 {{- end -}}
-{{- $subject := (index . 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
-{{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index . 2) -}}
+{{- $subject := (index $fields 2 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
+{{- $issueid := regexp.FindAll "(#)([0-9]{1,4})" (index $fields 2) -}}
 {{- $hyperlinkedsubject := $subject -}}
 {{- if $issueid -}}
     {{- $processed := "" -}}
