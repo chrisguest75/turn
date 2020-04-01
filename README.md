@@ -2,17 +2,24 @@
 Demonstrates a way to produce release notes for a repo. 
 
 ## Prequisites
-You'll need to have gomplates installed 
+You'll need to have gomplates and git installed 
 
+Gomplates is available on all major package managers. 
 ```sh
 brew install gomplate
+apk add gomplates
+apt-get install gomplates
 ```
+
+If you're running this inside a CI/CD process in a container you'll need to make sure the tools are installed. 
 
 ## Examples 
 [DEPLOYMENTS.md](./DEPLOYMENTS.md)  
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
+* Fix when commit subjects have commas in them
+* Add git --no-pager to all of the commands..  
 * Add a githook for validating the commit format. 
 * Add circleci plugins to pull deployments.... 
 * Limit generation to particular branch.
