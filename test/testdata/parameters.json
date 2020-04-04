@@ -1,0 +1,8 @@
+{
+    "version":"1.0", 
+    "repo_url":"http://repo",
+    "issues_url":"http://issues/",
+    "seperator":"c80e53d155344a9dab87faad3884f679",
+    "issue_prefix":"#", 
+    "metadata":"metadata text"
+}
