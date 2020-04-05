@@ -8,4 +8,4 @@ fi
 set -e
 bats -t ./test/releasenotes.bats
 bats -t ./test/deployment.bats
-
+bats -t ./test/slack.bats
