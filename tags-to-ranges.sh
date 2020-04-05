@@ -13,6 +13,11 @@ function trim() {
 }
 
 function process() {
+    local include_next=
+    if [[ -n $1 ]]; then 
+        include_next=$1
+    fi
+        
     local previous_tag=0.0
     #local depth=$(expr $(git rev-list --no-merges --count master) - 1)
     local depth=$(git --no-pager rev-list --no-merges --count master)
@@ -29,6 +34,12 @@ function process() {
         previous_id=$current_id
     done < <(git --no-pager tag --list -n1 | sort -V)
 
+    if [[ -n $include_next && $include_next == true ]]; then
+        current_id=$(git --no-pager rev-list -n 1 HEAD)
+        if [[ $previous_id != $current_id ]]; then 
+            echo "$(trim $previous_id), $(trim $current_id), Next"
+        fi 
+    fi
 }
 
-process 
+process $1

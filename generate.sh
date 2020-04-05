@@ -47,6 +47,7 @@ function main() {
     local EXITCODE=0
     local DEBUG=false  
     local CLEAN=false 
+    local INCLUDENEXT=false
     local TEMPORARY_FOLDER=./output/
     local OUTPUT_TYPE="ALL"
     local OUTPUT_LOCATION=./
@@ -76,6 +77,11 @@ function main() {
         --tags)
             # shellcheck disable=SC2034
             local -r MODE="tag"   
+            shift # past argument=value
+        ;;           
+        --includenext)
+            # shellcheck disable=SC2034
+            local -r INCLUDENEXT=true   
             shift # past argument=value
         ;;           
         --clean)
@@ -144,8 +150,7 @@ function main() {
                     echo "* Creating version logs"
                     if [[ ${MODE} == "tag" ]]; then
                         if [[ -f "./tags-to-ranges.sh" ]]; then
-                            . ./tags-to-ranges.sh
-                            process > "./ranges.csv"
+                            ./tags-to-ranges.sh ${INCLUDENEXT} > "./ranges.csv"
                         else
                             echo "./tags-to-ranges.sh not found"
                             exit 1
