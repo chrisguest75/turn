@@ -20,17 +20,22 @@ If you're running this inside a CI/CD process in a container you'll need to make
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
+* Package for homebrew 
+* Package for deb. 
+* Add a git action to build.
 * Missing tests:
     * Using different issue identifier
+    * No issue in subject
     * Subjects with table markers |
-    * Add versions and tags processing.
+    * Add versions and tags processing tests.
+    * Test tags to ranges.
+* Can I get bats core into junit format? 
+* batscore docker with gomplate and sort -V dependency. 
 * Use a temp directory to build if required - rather than output. 
-* Make tags.sh just create a ranges.csv file. 
 * Somehow detect overlapping ranges. 
 * Add a common template that is included to process the input file.
 * Handle rollbacks
 * Hyperlink the circle work flow in metadata 
-* Fix tags order on this repo
 * Add a githook for validating the commit format. 
 * notes directory
 * Add circleci plugins to pull deployments.... 
