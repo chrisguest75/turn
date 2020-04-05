@@ -63,7 +63,8 @@ load 'test_helper/bats-assert/load'
                 -c users=./user_mapping.json \
                 -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
                 -c .=${BATS_TEST_DIRNAME}/testdata/empty.txt 
-    echo $output >&3 
+    #echo $output >&3 
+    assert_line --index 1 --regexp 'No commits'
     assert_success    
 }
 
