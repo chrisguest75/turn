@@ -143,21 +143,20 @@ function main() {
                 create)
                     echo "* Creating version logs"
                     if [[ ${MODE} == "tag" ]]; then
-                        if [[ -f "./tags.sh" ]]; then
-                            . ./tags.sh
-                            process "${TEMPORARY_FOLDER}" 
+                        if [[ -f "./tags-to-ranges.sh" ]]; then
+                            . ./tags-to-ranges.sh
+                            process > "./ranges.csv"
                         else
-                            echo "./tags.sh not found"
+                            echo "./tags-to-ranges.sh not found"
                             exit 1
                         fi
+                    fi
+                    if [[ -f "./versions.sh" ]]; then
+                        . ./versions.sh
+                        process "${TEMPORARY_FOLDER}" "./ranges.csv"
                     else
-                        if [[ -f "./versions.sh" ]]; then
-                            . ./versions.sh
-                            process "${TEMPORARY_FOLDER}" "./ranges.csv"
-                        else
-                            echo "./versions.sh not found"
-                            exit 1
-                        fi
+                        echo "./versions.sh not found"
+                        exit 1
                     fi
 
                     echo ""
