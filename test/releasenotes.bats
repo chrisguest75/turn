@@ -68,6 +68,15 @@ load 'test_helper/bats-assert/load'
     assert_success    
 }
 
+@test "Single commit" {
+    run gomplate --file ./release_notes.gomplate -c emojis=./deployment_emojis.json \
+                -c users=./user_mapping.json \
+                -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
+                -c .=${BATS_TEST_DIRNAME}/testdata/single.txt 
+    #echo $output >&3 
+    assert_line --index 3  --regexp '\|([ ]*)\[8de801d\]\(http://repo/commit/8de801d\)([ ]*)\|([ ]*)@chris.guest([ ]*)\|(.*)\|'
+    assert_success    
+}
 #*******************************************************************
 #* Hyperlinking
 #*******************************************************************

@@ -1,6 +1,7 @@
 ## Version {{ (datasource "version").version }}
 {{ $linecount := len (split . "\n") -}}
-{{- if le $linecount 1 -}}
+{{- $inputlen := len . -}}
+{{- if and (le $linecount 1) (eq $inputlen 0) -}}
 No commits
 {{- else -}}
 | CommitId      | Author        | Summary       |
