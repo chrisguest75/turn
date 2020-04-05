@@ -1,5 +1,9 @@
-{{- $message := print "Deployment" (datasource "version").version "\\n" -}}
-
+{{- $message := print "Deployment " (datasource "version").version "\\n" -}}
+{{ $linecount := len (split . "\n") -}}
+{{- $inputlen := len . -}}
+{{- if and (le $linecount 1) (eq $inputlen 0) -}}
+{{- $message = print $message "No commits" "\\n" -}}
+{{- else -}}
 {{- $message = print $message ":" (datasource "emojis").head "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
 {{- $lines := (. | strings.ReplaceAll "," " " | strings.ReplaceAll (datasource "version").seperator ", ") }}
 {{ range ($lines | csv) -}}
@@ -33,6 +37,7 @@
 {{- $message = print $message  ":" $worm ": <" $commiturl "|" $commitid "> " $authorremap " " $hyperlinkedsubject "\\n" -}}    
 {{- end -}}
 {{- $message = print $message ":" (datasource "emojis").tail "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
+{{- end -}}
 {
   "channel": "{{ (datasource "version").channel }}",
   "blocks": [
@@ -55,8 +60,3 @@
     }
   ]
 }
-
-
-
-
-

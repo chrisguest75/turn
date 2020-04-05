@@ -1,10 +1,14 @@
 ## Deployment {{ (datasource "version").version }}
-
-:{{ (datasource "emojis").head }}-{{ (datasource "emojis").colours | random.Item }}:   
+{{ $linecount := len (split . "\n") -}}
+{{- $inputlen := len . -}}
+{{- if and (le $linecount 1) (eq $inputlen 0) -}}
+No commits
+{{- else -}}
+{{ print ":" (datasource "emojis").head "-" ((datasource "emojis").colours | random.Item) ":" "   " }}   
 {{- $lines := (. | strings.ReplaceAll "," " " | strings.ReplaceAll (datasource "version").seperator ", ") }}
 {{ range ($lines | csv) -}}
 {{- $fields := . -}}
-{{- $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
+{{ $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
 {{- $commitid := (index $fields 0 | strings.ReplaceAll "'" "") -}}
 {{- $commiturl := (print (datasource "version").repo_url "/commit/" $commitid) -}}
 {{- $author := (index $fields 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
@@ -32,4 +36,4 @@
 {{- end -}}
 {{ print ":" $worm ":" }} [{{ print $commitid }}]({{ print $commiturl }}) {{ print $authorremap }} {{ print $hyperlinkedsubject }}   
 {{ end }}:{{ (datasource "emojis").tail }}-{{ (datasource "emojis").colours | random.Item }}:
-
+{{ end }}

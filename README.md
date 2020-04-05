@@ -1,6 +1,8 @@
 # README
 Demonstrates a way to produce release notes for a repo. 
 
+Turn - Totally Uniform Release Notes. 
+
 ## Prequisites
 You'll need to have gomplates and git installed 
 
@@ -18,9 +20,18 @@ If you're running this inside a CI/CD process in a container you'll need to make
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
+* Missing tests:
+    * Using different issue identifier
+    * Subjects with table markers |
+    * Add versions and tags processing.
+* Use a temp directory to build if required - rather than output. 
+* Make tags.sh just create a ranges.csv file. 
+* Somehow detect overlapping ranges. 
+* Add a common template that is included to process the input file.
+* Handle rollbacks
+* Hyperlink the circle work flow in metadata 
 * Fix tags order on this repo
 * Add a githook for validating the commit format. 
-* Use a temp directory to build if required - rather than output. 
 * notes directory
 * Add circleci plugins to pull deployments.... 
 * Limit generation to particular branch.

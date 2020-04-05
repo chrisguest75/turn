@@ -1,5 +1,9 @@
 ## Version {{ (datasource "version").version }}
-
+{{ $linecount := len (split . "\n") -}}
+{{- $inputlen := len . -}}
+{{- if and (le $linecount 1) (eq $inputlen 0) -}}
+No commits
+{{- else -}}
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
 {{- $lines := (. | strings.ReplaceAll "," " " | strings.ReplaceAll (datasource "version").seperator ", ") }}
@@ -34,3 +38,4 @@
 
 |[{{ print $commitid }}]({{ print $commiturl }})|{{ print $authorremap }}|{{ print $hyperlinkedsubject }}|
 {{ end }}
+{{- end -}}
