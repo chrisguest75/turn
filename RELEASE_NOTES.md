@@ -1,4 +1,11 @@
 # RELEASE NOTES
+## Version 3.5
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[c4a715d](https://github.com/chrisguest75/git_examples/commit/c4a715d)|@chris.guest|Add a first set of tests using batscore ([#1067](https://github.com/chrisguest75/git_examples/issues/1067)) ([#14](https://github.com/chrisguest75/git_examples/issues/14))|
+|[8b657ef](https://github.com/chrisguest75/git_examples/commit/8b657ef)|@chris.guest|Allow adding of extra metadata ([#1267](https://github.com/chrisguest75/git_examples/issues/1267)) ([#13](https://github.com/chrisguest75/git_examples/issues/13))|
+|[5c56e3d](https://github.com/chrisguest75/git_examples/commit/5c56e3d)|@chris.guest|Allow setting of issue prefix in config ([#1300](https://github.com/chrisguest75/git_examples/issues/1300))|
+|[63be760](https://github.com/chrisguest75/git_examples/commit/63be760)|@chris.guest|Fix the issue with commas ([#1009](https://github.com/chrisguest75/git_examples/issues/1009)) ([#11](https://github.com/chrisguest75/git_examples/issues/11))|
 ## Version 3.4
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
@@ -43,6 +50,11 @@
 | ------------- | ------------- | ------------- |
 |[5943833](https://github.com/chrisguest75/git_examples/commit/5943833)|@chris.guest|Work on a deployment list ([#1054](https://github.com/chrisguest75/git_examples/issues/1054))|
 |[e5c0e34](https://github.com/chrisguest75/git_examples/commit/e5c0e34)|@chris.guest|Update release notes|
+|[8de801d](https://github.com/chrisguest75/git_examples/commit/8de801d)|@chris.guest|Fix output directory not being created - generate notes pre-merge ([#1034](https://github.com/chrisguest75/git_examples/issues/1034))|
+|[fe625ba](https://github.com/chrisguest75/git_examples/commit/fe625ba)|@chris.guest|Fix output directory not being created - generate notes pre-merge ([#1034](https://github.com/chrisguest75/git_examples/issues/1034))|
+|[2e8e592](https://github.com/chrisguest75/git_examples/commit/2e8e592)|@chris.guest|Merge branch master of github.com:chrisguest75/git_examples|
+|[572a580](https://github.com/chrisguest75/git_examples/commit/572a580)|@chris.guest|Fix output directory not being created - generate notes pre-merge ([#1034](https://github.com/chrisguest75/git_examples/issues/1034))|
+|[d3d06db](https://github.com/chrisguest75/git_examples/commit/d3d06db)|@chris.guest|Fix bugs ([#1](https://github.com/chrisguest75/git_examples/issues/1))|
 ## Version 2.17
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
@@ -51,13 +63,11 @@
 |[2e8e592](https://github.com/chrisguest75/git_examples/commit/2e8e592)|@chris.guest|Merge branch master of github.com:chrisguest75/git_examples|
 |[572a580](https://github.com/chrisguest75/git_examples/commit/572a580)|@chris.guest|Fix output directory not being created - generate notes pre-merge ([#1034](https://github.com/chrisguest75/git_examples/issues/1034))|
 |[d3d06db](https://github.com/chrisguest75/git_examples/commit/d3d06db)|@chris.guest|Fix bugs ([#1](https://github.com/chrisguest75/git_examples/issues/1))|
-## Version 2.2
-| CommitId      | Author        | Summary       |
-| ------------- | ------------- | ------------- |
 |[ab4ffc5](https://github.com/chrisguest75/git_examples/commit/ab4ffc5)|@chris.guest|Fix tables in markdown ([#1023](https://github.com/chrisguest75/git_examples/issues/1023))|
 |[8cd97b7](https://github.com/chrisguest75/git_examples/commit/8cd97b7)|@chris.guest|Update instructions ([#1020](https://github.com/chrisguest75/git_examples/issues/1020))|
 |[41100cc](https://github.com/chrisguest75/git_examples/commit/41100cc)|@chris.guest|Update release notes ([#1017](https://github.com/chrisguest75/git_examples/issues/1017))|
-## Version 2.1
+## Version 2.2
+No commits## Version 2.1
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
 |[7130ef6](https://github.com/chrisguest75/git_examples/commit/7130ef6)|@chris.guest|Reverse the order of the release notes ([#1016](https://github.com/chrisguest75/git_examples/issues/1016))|

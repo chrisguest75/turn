@@ -18,6 +18,7 @@ function set_tags() {
     git tag -a -m "Add external ranges and support for tags" 3.2 43ac9b1
     git tag -a -m "Demonstration of release process" 3.3 f0b2f1f
     git tag -a -m "Fix the code for tags changes, add --no-pager" 3.4 c67ef63    
+    git tag -a -m "batscore testing" 3.5 c4a715d   
     git push --tags
 }
 
