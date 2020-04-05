@@ -172,6 +172,7 @@ function main() {
         fi
 
         readonly SEPERATOR=c80e53d155344a9dab87faad3884f679
+        readonly RANGES_FILE="./ranges.csv"
 
         if [ "${ACTION}" ]; then
             case "${ACTION}" in
@@ -182,15 +183,20 @@ function main() {
                     echo "* Creating version logs"
                     if [[ ${MODE} == "tag" ]]; then
                         if [[ -f "${SCRIPT_DIR}/tags-to-ranges.sh" ]]; then
-                            ${SCRIPT_DIR}/tags-to-ranges.sh ${INCLUDENEXT} > "./ranges.csv"
+                            ${SCRIPT_DIR}/tags-to-ranges.sh ${INCLUDENEXT} > ${RANGES_FILE}
                         else
                             echo "${SCRIPT_DIR}/tags-to-ranges.sh not found"
                             exit 1
                         fi
                     fi
                     if [[ -f "${SCRIPT_DIR}/versions.sh" ]]; then
-                        . ${SCRIPT_DIR}/versions.sh
-                        process "${TEMPORARY_FOLDER}" "./ranges.csv"
+                        if [[ -s ${RANGES_FILE} ]]; then
+                            . ${SCRIPT_DIR}/versions.sh
+                            process "${TEMPORARY_FOLDER}" ${RANGES_FILE}
+                        else
+                            echo "${RANGES_FILE} is empty"
+                            exit 1
+                        fi
                     else
                         echo "${SCRIPT_DIR}/versions.sh not found"
                         exit 1
