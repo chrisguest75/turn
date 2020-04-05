@@ -25,7 +25,8 @@ usage: $SCRIPT_NAME options
 OPTIONS:
     -a --action              [create]
     -t --type                [release|deployment|slack|ALL]
-    -o --out                 Output path default "./"
+    -o --out                 Output path - default "./"
+    -w --work-dir            Working folder - default is to use tmp
     --debug                  
     --tags                   Use tags rather than ranges                     
     --clean                  Clean the temporary folder                  
@@ -40,6 +41,22 @@ EOF
 }
 
 #****************************************************************************
+#** add_trailing_slash
+#****************************************************************************
+
+function add_trailing_slash() {
+    : ${1?"${FUNCNAME[0]}(path) - missing path argument"}
+
+    if [[ -z ${1} ]]; then 
+        #echo "${FUNCNAME[0]}(path) - path is empty" && exit 1
+        echo ""
+        return
+    fi
+    # remove an existing slash and add new one.
+    echo "${1%/}/"
+}
+
+#****************************************************************************
 #** Main script 
 #****************************************************************************
 
@@ -48,7 +65,7 @@ function main() {
     local DEBUG=false  
     local CLEAN=false 
     local INCLUDENEXT=false
-    local TEMPORARY_FOLDER=./output/
+    local TEMPORARY_FOLDER=
     local OUTPUT_TYPE="ALL"
     local OUTPUT_LOCATION=./
     local MODE="range"
@@ -66,6 +83,11 @@ function main() {
         ;;                   
         -o=*|--out=*)
             local -r OUTPUT_LOCATION="${i#*=}"
+            shift # past argument=value
+        ;;                   
+        -w=*|--work-dir=*)
+            local -r TEMPORARY_FOLDER="${i#*=}"
+            TEMPORARY_FOLDER=add_trailing_slash ${TEMPORARY_FOLDER}           
             shift # past argument=value
         ;;                   
         --debug)
@@ -114,12 +136,18 @@ function main() {
             exit 1
         fi
 
-        if [[ ${CLEAN} == true ]]; then
-            rm -rf "${TEMPORARY_FOLDER}"
-        fi 
-        if [[ ! -d "${TEMPORARY_FOLDER}" ]]; then
-            mkdir -p ${TEMPORARY_FOLDER}
-        fi 
+        if [[ -n ${TEMPORARY_FOLDER} ]]; then
+            # To allow clean need to make sure that directory is not root.
+            #if [[ ${CLEAN} == true ]]; then            
+                #rm -rf "${TEMPORARY_FOLDER}"
+            #fi 
+            if [[ ! -d "${TEMPORARY_FOLDER}" ]]; then
+                mkdir -p ${TEMPORARY_FOLDER}
+            fi 
+        else
+            TEMPORARY_FOLDER="$(mktemp -d)/"
+            echo "TEMPORARY_FOLDER=${TEMPORARY_FOLDER}"
+        fi
 
         if [ "${DEBUG}" == true ] ; then
             ls -al     
@@ -225,8 +253,13 @@ function main() {
                         done
 
                         for filename in $(ls ${TEMPORARY_FOLDER} | grep md | sort -Vr | head -n 1); do
-                            echo "* Posting final markdown ${TEMPORARY_FOLDER}${filename}"
-                            curl -X POST -H "Content-type: application/json" -d @"${TEMPORARY_FOLDER}${filename}" ${SLACK_POST}
+                            if [[ -n ${SLACK_POST} ]]; then 
+                                echo "* Posting final markdown ${TEMPORARY_FOLDER}${filename}"
+                                curl -X POST -H "Content-type: application/json" -d @"${TEMPORARY_FOLDER}${filename}" ${SLACK_POST}
+                            else
+                                echo "No URL is defined in \$SLACK_POST"
+                                exit
+                            fi
                         done
                         PROCESSED=true
                     fi

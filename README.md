@@ -1,7 +1,8 @@
 # README
-Demonstrates a way to produce release notes for a repo. 
+**TURN** - 'Totally' Uniform Release Notes. 
 
-Turn - Totally Uniform Release Notes. 
+Demonstrates a way to produce release notes for a repo. 
+It also handles formatting notes for Slack posting and can be used as part of a CI process to notify of changes before a deployment
 
 ## Prequisites
 You'll need to have gomplates and git installed 
@@ -31,7 +32,6 @@ If you're running this inside a CI/CD process in a container you'll need to make
     * Test tags to ranges.
 * Can I get bats core into junit format? 
 * batscore docker with gomplate and sort -V dependency. 
-* Use a temp directory to build if required - rather than output. 
 * Somehow detect overlapping ranges. 
 * Add a common template that is included to process the input file.
 * Handle rollbacks
