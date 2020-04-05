@@ -20,3 +20,9 @@ load 'test_helper/bats-assert/load'
     assert_output --regexp 'gomplate version [3-9].[0-9].[0-9]'
 }
 
+# test for sort -V
+@test "sort -V exists" {
+    " " | sort -V
+    #echo $output >&3 
+    assert_success
+}
