@@ -106,3 +106,13 @@ git commit --amend
 Clean the ./output directory and comment out all but one of the git log outputs.
 This makes the script run faster and allows quick testing of template modifications
 
+## Build Docker
+Build docker image that will process the release notes or slack.  
+```sh
+# During build it will run tests as well 
+docker build -t turn .  
+docker run -it --rm --entrypoint=/bin/bash turn  
+docker run -it --rm -v $(pwd):/repo --entrypoint=/bin/bash turn
+docker run -it --rm -v $(pwd):/repo turn --action=create --type=deployment --tags --includenext 
+docker run -it --rm -v $(pwd):/repo turn --action=create --type=ALL --tags  
+```
