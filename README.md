@@ -21,6 +21,7 @@ If you're running this inside a CI/CD process in a container you'll need to make
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
+* If no ranges or tags make next have a range for the whole repo.  
 * Specify a range.csv filename
 * Package for homebrew 
 * Package for deb. 
