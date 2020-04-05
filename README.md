@@ -30,7 +30,6 @@ If you're running this inside a CI/CD process in a container you'll need to make
 * Add a common template that is included to process the input file.
 * Handle rollbacks
 * Hyperlink the circle work flow in metadata 
-* Fix tags order on this repo
 * Add a githook for validating the commit format. 
 * notes directory
 * Add circleci plugins to pull deployments.... 
