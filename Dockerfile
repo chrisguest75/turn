@@ -1,5 +1,7 @@
 FROM alpine:3.11.5
 
+ENV DEBUG_ENVIRONMENT=
+
 RUN apk -v --no-cache --update \
       add \
       bash \

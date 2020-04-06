@@ -26,3 +26,9 @@ load 'test_helper/bats-assert/load'
     #echo $output >&3 
     #assert_success
 }
+
+#@test "Version of git is correct" {
+#    run git version
+#    #echo $output >&3 
+#    assert_output --regexp 'git version [2-9].[2-9][5-9].[0-9]'
+#}

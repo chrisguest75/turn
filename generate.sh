@@ -8,6 +8,9 @@ readonly SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 
 if [ -n "${DEBUG_ENVIRONMENT}" ];then 
     # if DEBUG_ENVIRONMENT is set
+    echo "SCRIPT_NAME=${SCRIPT_NAME}"
+    echo "SCRIPT_PATH=${SCRIPT_PATH}"
+    echo "SCRIPT_DIR=${SCRIPT_DIR}"
     env
     export
 fi
@@ -27,10 +30,14 @@ OPTIONS:
     -t --type                [release|deployment|slack|ALL]
     -o --out                 Output path - default "./"
     -w --work-dir            Working folder - default is to use tmp
+    --includenext            Include latest commits to branch in Next version section.  
     --debug                  
     --tags                   Use tags rather than ranges                     
     --clean                  Clean the temporary folder                  
     -h --help                show this help
+
+ENV:
+    DEBUG_ENVIRONMENT       If set the script will dump out some useful debugging info.
 
 Examples:
     $SCRIPT_NAME --action=create --type=release -o=../ 
@@ -130,6 +137,7 @@ function main() {
             . .env
         else
             echo "Warning no local .env found"
+            exit 1
         fi
         if [[ ! $(command -v gomplate) ]]; then
             echo "gomplate tool not found.  Please install and retry"
@@ -168,6 +176,7 @@ function main() {
         fi
 
         readonly SEPERATOR=c80e53d155344a9dab87faad3884f679
+        readonly RANGES_FILE="./ranges.csv"
 
         if [ "${ACTION}" ]; then
             case "${ACTION}" in
@@ -177,25 +186,30 @@ function main() {
                 create)
                     echo "* Creating version logs"
                     if [[ ${MODE} == "tag" ]]; then
-                        if [[ -f "./tags-to-ranges.sh" ]]; then
-                            ./tags-to-ranges.sh ${INCLUDENEXT} > "./ranges.csv"
+                        if [[ -f "${SCRIPT_DIR}/tags-to-ranges.sh" ]]; then
+                            ${SCRIPT_DIR}/tags-to-ranges.sh ${INCLUDENEXT} > ${RANGES_FILE}
                         else
-                            echo "./tags-to-ranges.sh not found"
+                            echo "${SCRIPT_DIR}/tags-to-ranges.sh not found"
                             exit 1
                         fi
                     fi
-                    if [[ -f "./versions.sh" ]]; then
-                        . ./versions.sh
-                        process "${TEMPORARY_FOLDER}" "./ranges.csv"
+                    if [[ -f "${SCRIPT_DIR}/versions.sh" ]]; then
+                        if [[ -s ${RANGES_FILE} ]]; then
+                            . ${SCRIPT_DIR}/versions.sh
+                            process "${TEMPORARY_FOLDER}" ${RANGES_FILE}
+                        else
+                            echo "${RANGES_FILE} is empty"
+                            exit 1
+                        fi
                     else
-                        echo "./versions.sh not found"
+                        echo "${SCRIPT_DIR}/versions.sh not found"
                         exit 1
                     fi
 
                     echo ""
                     local PROCESSED=false
                     if [[ "${OUTPUT_TYPE}" == "ALL" || "${OUTPUT_TYPE}" == "release" ]]; then 
-                        TEMPLATE=./release_notes.gomplate
+                        TEMPLATE=${SCRIPT_DIR}/release_notes.gomplate
 
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
@@ -203,7 +217,7 @@ function main() {
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}'}" | \
                                 gomplate --file ${TEMPLATE} \
-                                -c users=user_mapping.json \
+                                -c users=${SCRIPT_DIR}/user_mapping.json \
                                 -c version=stdin:///in.json \
                                 -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
                         done
@@ -216,7 +230,7 @@ function main() {
                         PROCESSED=true
                     fi
                     if [[ "${OUTPUT_TYPE}" == "ALL" || "${OUTPUT_TYPE}" == "deployment" ]]; then 
-                        TEMPLATE=./deployed.gomplate
+                        TEMPLATE=${SCRIPT_DIR}/deployed.gomplate
 
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
@@ -224,8 +238,8 @@ function main() {
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}'}" | \
                                 gomplate --file ${TEMPLATE} \
-                                -c emojis=deployment_emojis.json \
-                                -c users=user_mapping.json \
+                                -c emojis=${SCRIPT_DIR}/deployment_emojis.json \
+                                -c users=${SCRIPT_DIR}/user_mapping.json \
                                 -c version=stdin:///in.json \
                                 -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
                         done
@@ -238,7 +252,7 @@ function main() {
                         PROCESSED=true
                     fi
                     if [[ "${OUTPUT_TYPE}" == "ALL" || "${OUTPUT_TYPE}" == "slack" ]]; then 
-                        TEMPLATE=./slack.gomplate
+                        TEMPLATE=${SCRIPT_DIR}/slack.gomplate
 
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
                         for filename in ${TEMPORARY_FOLDER}*.txt; do
@@ -246,8 +260,8 @@ function main() {
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'channel':'${SLACK_CHANNEL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}', 'metadata':'${METADATA}'}" | \
                                 gomplate --file ${TEMPLATE} \
-                                -c emojis=deployment_emojis.json \
-                                -c users=user_mapping.json \
+                                -c emojis=${SCRIPT_DIR}/deployment_emojis.json \
+                                -c users=${SCRIPT_DIR}/user_mapping.json \
                                 -c version=stdin:///in.json \
                                 -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
                         done
