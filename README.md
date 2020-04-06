@@ -1,4 +1,6 @@
 # README
+![Docker Image CI](https://github.com/chrisguest75/turn/workflows/Docker%20Image%20CI/badge.svg)
+
 **TURN** - 'Totally' Uniform Release Notes. 
 
 Demonstrates a way to produce release notes for a repo. 
