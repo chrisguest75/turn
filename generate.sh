@@ -30,10 +30,14 @@ OPTIONS:
     -t --type                [release|deployment|slack|ALL]
     -o --out                 Output path - default "./"
     -w --work-dir            Working folder - default is to use tmp
+    --includenext            Include latest commits to branch in Next version section.  
     --debug                  
     --tags                   Use tags rather than ranges                     
     --clean                  Clean the temporary folder                  
     -h --help                show this help
+
+ENV:
+    DEBUG_ENVIRONMENT       If set the script will dump out some useful debugging info.
 
 Examples:
     $SCRIPT_NAME --action=create --type=release -o=../ 
