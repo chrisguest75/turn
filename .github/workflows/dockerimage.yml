@@ -15,5 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build -t turn:${{ github.sha }} .  
+      run: docker build -t docker.pkg.github.com/chrisguest75/turn/turn:${{ github.sha }} .  
 
+    - name: Build the Docker image
+      run: echo ${{ github.token }} | docker login docker.pkg.github.com -u chrisguest75 --password-stdin && docker push docker.pkg.github.com/chrisguest75/turn/turn::${{ github.sha }}
+    
