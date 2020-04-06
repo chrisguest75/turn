@@ -24,7 +24,7 @@ jobs:
 
     - name: Push the Docker image to DockerHub
       run: | 
-          echo ${{ secrets.dockerhub }} | docker login chrisguest --password-stdin 
+          echo ${{ secrets.dockerhub }} | docker login --username chrisguest --password-stdin 
           docker tag docker.pkg.github.com/chrisguest75/turn/turn:${{ github.sha }} chrisguest75/turn/turn:${{ github.sha }}
           docker push chrisguest75/turn/turn:${{ github.sha }}
           
