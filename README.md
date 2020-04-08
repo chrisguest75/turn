@@ -21,11 +21,10 @@ If you're running this inside a CI/CD process in a container you'll need to make
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
-* If no ranges or tags make next have a range for the whole repo.  
+* Improve how rollbacks are described.
 * Specify a range.csv filename
 * Package for homebrew 
 * Package for deb. 
-* Add a git action to build.
 * Missing tests:
     * Using different issue identifier
     * No issue in subject
@@ -36,7 +35,6 @@ If you're running this inside a CI/CD process in a container you'll need to make
 * batscore docker with gomplate and sort -V dependency. 
 * Somehow detect overlapping ranges. 
 * Add a common template that is included to process the input file.
-* Handle rollbacks
 * Hyperlink the circle work flow in metadata 
 * Add a githook for validating the commit format. 
 * notes directory

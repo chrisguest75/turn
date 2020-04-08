@@ -155,3 +155,17 @@ load 'test_helper/bats-assert/load'
     assert_output --regexp 'Harry Styles'
     assert_success    
 }
+
+#*******************************************************************
+#* Truncation 
+#*******************************************************************
+
+@test "Large ranges are truncated" {
+    run gomplate --file ./slack.gomplate -c emojis=./deployment_emojis.json \
+                -c users=./user_mapping.json \
+                -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
+                -c .=${BATS_TEST_DIRNAME}/testdata/large_range.txt 
+    echo $output >&3 
+    assert_output --regexp '\.\.\. truncated'
+    assert_success    
+}

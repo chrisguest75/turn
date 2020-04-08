@@ -40,11 +40,25 @@ function process() {
 
     while IFS=, read -r rev1 rev2 version
     do
-        echo "$(trim $version) is between $(trim $rev1) and $(trim $rev2)"
-        if [[ "$(trim $rev1)" == "$(trim $rev2)" ]]; then
-            git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $(trim $rev2) > ${basepath}$(trim $version).txt
+        version=$(trim $version)
+        rev1=$(trim $rev1)
+        rev2=$(trim $rev2)
+        echo "$version is between $rev1 and $rev2"
+
+        local rev1depth=0
+        local rev2depth=0        
+        rev1depth=$(expr $(git --no-pager rev-list --first-parent --count $rev1) - 1)
+        rev2depth=$(expr $(git --no-pager rev-list --first-parent --count $rev2) - 1)
+        if [[ $rev1depth -gt $rev2depth ]]; then
+            echo "ROLLBACK from $rev2 ($rev2depth) to $rev1 ($rev1depth)"   
+            git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $rev2..$rev1 > ${basepath}ROLLBACK.txt    
+            break        
         else
-            git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $(trim $rev1)..$(trim $rev2) > ${basepath}$(trim $version).txt
-        fi        
+            if [[ "$rev1" == "$rev2" ]]; then
+                git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $rev2 > ${basepath}${version}.txt
+            else
+                git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $rev1..$rev2 > ${basepath}${version}.txt
+            fi        
+        fi
     done < ${ranges_filepath}
 }

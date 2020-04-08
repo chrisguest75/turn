@@ -6,6 +6,7 @@
 {{- else -}}
 {{- $message = print $message ":" (datasource "emojis").head "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
 {{- $lines := (. | strings.ReplaceAll "," " " | strings.ReplaceAll (datasource "version").seperator ", ") }}
+{{- $truncated := 0 -}}
 {{ range ($lines | csv) -}}
 {{- $fields := . -}}
 {{- $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
@@ -34,7 +35,16 @@
 {{- else -}}
     {{- /* print "No issues" */ -}}
 {{- end -}}
-{{- $message = print $message  ":" $worm ": <" $commiturl "|" $commitid "> " $authorremap " " $hyperlinkedsubject "\\n" -}}    
+
+{{- $message_line := print ":" $worm ": <" $commiturl "|" $commitid "> " $authorremap " " $hyperlinkedsubject "\\n" -}}    
+{{- if lt (add (len $message) (len $message_line)) 2900 -}}
+  {{- $message = print $message $message_line -}}
+{{- else -}}
+{{- $truncated = add $truncated 1 -}}
+{{- end -}}
+{{- end -}}
+{{- if gt $truncated 0 -}}
+  {{- $message = print $message "... truncated " $truncated " commits\\n" -}}
 {{- end -}}
 {{- $message = print $message ":" (datasource "emojis").tail "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
 {{- end -}}

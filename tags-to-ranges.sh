@@ -22,7 +22,7 @@ function process() {
     # Do not log messages or debug 
     local branch=master
     local previous_tag=0.0
-    local depth=$(expr $(git rev-list --first-parent --count ${branch}) - 1)
+    local depth=$(expr $(git --no-pager rev-list --first-parent --count ${branch}) - 1)
     #local depth=$(git --no-pager rev-list --first-parent --count master)
     local previous_id=$(git --no-pager rev-list -n 1 --first-parent ${branch}~${depth}) 
     local current_tag=

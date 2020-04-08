@@ -270,6 +270,12 @@ function main() {
                             if [[ -n ${SLACK_POST} ]]; then 
                                 echo "* Posting final markdown ${TEMPORARY_FOLDER}${filename}"
                                 curl -X POST -H "Content-type: application/json" -d @"${TEMPORARY_FOLDER}${filename}" ${SLACK_POST}
+                                local exitcode=$?
+                                echo "curl exitcode - ${exitcode}"
+                                if [[ ! ${exitcode} == 0 ]]; then
+                                    echo "Failed to send message"
+                                    cat ${TEMPORARY_FOLDER}${filename}
+                                fi
                             else
                                 echo "No URL is defined in \$SLACK_POST"
                                 exit
