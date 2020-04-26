@@ -1,4 +1,25 @@
 # RELEASE NOTES
+## Version 1.0.0
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[c3f6b1c](https://github.com/chrisguest75/turn/commit/c3f6b1c)|@chris.guest|Release 1.0.0|
+|[f09806b](https://github.com/chrisguest75/turn/commit/f09806b)|@chris.guest|Switch to semver for tags and ranges. ([#1542](https://github.com/chrisguest75/turn/issues/1542)) ([#17](https://github.com/chrisguest75/turn/issues/17))|
+|[09ffe67](https://github.com/chrisguest75/turn/commit/09ffe67)|@chris.guest|Merge remote-tracking branch refs/remotes/origin/master|
+|[45c17dc](https://github.com/chrisguest75/turn/commit/45c17dc)|@chris.guest|Support slack truncation and rollback reverse ranges.([#1503](https://github.com/chrisguest75/turn/issues/1503))|
+|[860ac63](https://github.com/chrisguest75/turn/commit/860ac63)|@chris.guest|Add license for people to use it.|
+|[c999438](https://github.com/chrisguest75/turn/commit/c999438)|@chris.guest|Correct path for dockerhub|
+|[8d2f7d6](https://github.com/chrisguest75/turn/commit/8d2f7d6)|@chris.guest|Fix dockerhub image path|
+|[8fc61d6](https://github.com/chrisguest75/turn/commit/8fc61d6)|@chris.guest|Add --username|
+|[13f51a0](https://github.com/chrisguest75/turn/commit/13f51a0)|@chris.guest|Push to dockerhub perhaps|
+|[e1eec89](https://github.com/chrisguest75/turn/commit/e1eec89)|@chris.guest|Remove : typo from tag format|
+|[50b2bd9](https://github.com/chrisguest75/turn/commit/50b2bd9)|@chris.guest|Attempt to push image|
+|[36865dd](https://github.com/chrisguest75/turn/commit/36865dd)|@chris.guest|Add build badge|
+|[e6f8ad0](https://github.com/chrisguest75/turn/commit/e6f8ad0)|@chris.guest|Test a build github action|
+|[2fd435b](https://github.com/chrisguest75/turn/commit/2fd435b)|@chris.guest|Improve the script to run inside a container. ([#1241](https://github.com/chrisguest75/turn/issues/1241))|
+|[8c45c55](https://github.com/chrisguest75/turn/commit/8c45c55)|@chris.guest|Add docker build  and switch libraries to supported versions ([#1260](https://github.com/chrisguest75/turn/issues/1260))|
+|[61b5956](https://github.com/chrisguest75/turn/commit/61b5956)|@chris.guest|Rename the repo and allow use of working folder or temp. ([#1389](https://github.com/chrisguest75/turn/issues/1389))|
+|[23dade0](https://github.com/chrisguest75/turn/commit/23dade0)|@chris.guest|Add a script to generate ranges from tags ([#1273](https://github.com/chrisguest75/turn/issues/1273)) ([#15](https://github.com/chrisguest75/turn/issues/15))|
+|[d6a832d](https://github.com/chrisguest75/turn/commit/d6a832d)|@chris.guest|Update release notes.|
 ## Version 0.3.5
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
