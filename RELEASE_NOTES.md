@@ -1,4 +1,9 @@
 # RELEASE NOTES
+## Version 1.1.1
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[7e9cfd7](https://github.com/chrisguest75/turn/commit/7e9cfd7)|@chris.guest|Release 1.1.1|
+|[3c3697b](https://github.com/chrisguest75/turn/commit/3c3697b)|@chris.guest|Update action and fix a bug that somehow changed behaviour ([#19](https://github.com/chrisguest75/turn/issues/19))|
 ## Version 1.1.0
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
