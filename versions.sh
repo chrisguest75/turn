@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ $_ != $0 ]]; then 
+if [[ $_ != "$0" ]]; then 
     echo "Script is being sourced"
 else 
     echo "Script is not being sourced"
@@ -8,7 +8,7 @@ else
 fi
 
 function trim() {
-    : ${1?"${FUNCNAME[0]}(string) - missing string argument"}
+    : "${1?\"${FUNCNAME[0]}(string) - missing string argument\"}"
 
     if [[ -z ${1} ]]; then 
         echo ""
@@ -16,11 +16,12 @@ function trim() {
     fi
     # remove an 
     trimmed=${1##*( )}
+    # shellcheck disable=SC2086
     echo ${trimmed%%*( )}
 }
 
 function process() {
-    : ${1?"${FUNCNAME[0]}(basepath, ranges_filepath) - missing basepath argument"}
+    : "${1?\"${FUNCNAME[0]}(basepath, ranges_filepath) - missing basepath argument\"}"
 
     local basepath="./"
     if [[ -n $1 ]]; then 
@@ -40,25 +41,25 @@ function process() {
 
     while IFS=, read -r rev1 rev2 version
     do
-        version=$(trim $version)
-        rev1=$(trim $rev1)
-        rev2=$(trim $rev2)
+        version=$(trim "$version")
+        rev1=$(trim "$rev1")
+        rev2=$(trim "$rev2")
         echo "$version is between $rev1 and $rev2"
 
         local rev1depth=0
         local rev2depth=0        
-        rev1depth=$(expr $(git --no-pager rev-list --first-parent --count $rev1) - 1)
-        rev2depth=$(expr $(git --no-pager rev-list --first-parent --count $rev2) - 1)
+        rev1depth=$(( $(git --no-pager rev-list --first-parent --count "$rev1") - 1))
+        rev2depth=$(( $(git --no-pager rev-list --first-parent --count "$rev2") - 1))
         if [[ $rev1depth -gt $rev2depth ]]; then
             echo "ROLLBACK from $rev2 ($rev2depth) to $rev1 ($rev1depth)"   
-            git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $rev2..$rev1 > ${basepath}ROLLBACK.txt    
+            git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" "$rev2..$rev1" > "${basepath}ROLLBACK.txt"    
             break        
         else
             if [[ "$rev1" == "$rev2" ]]; then
-                git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $rev2 > ${basepath}${version}.txt
+                git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" "$rev2" > "${basepath}${version}.txt"
             else
-                git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" $rev1..$rev2 > ${basepath}${version}.txt
+                git --no-pager log  --pretty=format:"'%h'${SEPERATOR}'%an'${SEPERATOR}'%s'" "$rev1..$rev2" > "${basepath}${version}.txt"
             fi        
         fi
-    done < ${ranges_filepath}
+    done < "${ranges_filepath}"
 }

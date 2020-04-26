@@ -52,7 +52,7 @@ EOF
 #****************************************************************************
 
 function add_trailing_slash() {
-    : ${1?"${FUNCNAME[0]}(path) - missing path argument"}
+    : "${1?\"${FUNCNAME[0]}(path) - missing path argument\"}"
 
     if [[ -z ${1} ]]; then 
         #echo "${FUNCNAME[0]}(path) - path is empty" && exit 1
@@ -75,6 +75,7 @@ function main() {
     local TEMPORARY_FOLDER=
     local OUTPUT_TYPE="ALL"
     local OUTPUT_LOCATION=./
+    local ENVFILE=.env
     local MODE="range"
 
     for i in "$@"
@@ -84,6 +85,10 @@ function main() {
             local -r ACTION="${i#*=}"
             shift # past argument=value
         ;; 
+        -e=*|--envfile=*)
+            local -r ENVFILE="${i#*=}"
+            shift # past argument=value
+        ;;         
         -t=*|--type=*)
             local -r OUTPUT_TYPE="${i#*=}"
             shift # past argument=value
@@ -93,8 +98,10 @@ function main() {
             shift # past argument=value
         ;;                   
         -w=*|--work-dir=*)
+            # shellcheck disable=SC2097
             local -r TEMPORARY_FOLDER="${i#*=}"
-            TEMPORARY_FOLDER=add_trailing_slash ${TEMPORARY_FOLDER}           
+            # shellcheck disable=SC2097,SC2098
+            TEMPORARY_FOLDER=add_trailing_slash "${TEMPORARY_FOLDER}"           
             shift # past argument=value
         ;;                   
         --debug)
@@ -132,11 +139,12 @@ function main() {
         EXITCODE=1
         help
     else
-        if [[ -f .env ]];then
-            echo "* Sourcing local .env"
-            . .env
+        if [[ -f "${ENVFILE}" ]];then
+            echo "* Sourcing local ${ENVFILE}"
+             # shellcheck disable=SC1090           
+            source "${ENVFILE}"
         else
-            echo "Warning no local .env found"
+            echo "Warning no local ${ENVFILE} found"
             exit 1
         fi
         if [[ ! $(command -v gomplate) ]]; then
@@ -150,7 +158,7 @@ function main() {
                 #rm -rf "${TEMPORARY_FOLDER}"
             #fi 
             if [[ ! -d "${TEMPORARY_FOLDER}" ]]; then
-                mkdir -p ${TEMPORARY_FOLDER}
+                mkdir -p "${TEMPORARY_FOLDER}"
             fi 
         else
             TEMPORARY_FOLDER="$(mktemp -d)/"
@@ -187,7 +195,7 @@ function main() {
                     echo "* Creating version logs"
                     if [[ ${MODE} == "tag" ]]; then
                         if [[ -f "${SCRIPT_DIR}/tags-to-ranges.sh" ]]; then
-                            ${SCRIPT_DIR}/tags-to-ranges.sh ${INCLUDENEXT} > ${RANGES_FILE}
+                            "${SCRIPT_DIR}/tags-to-ranges.sh" ${INCLUDENEXT} > ${RANGES_FILE}
                         else
                             echo "${SCRIPT_DIR}/tags-to-ranges.sh not found"
                             exit 1
@@ -195,7 +203,8 @@ function main() {
                     fi
                     if [[ -f "${SCRIPT_DIR}/versions.sh" ]]; then
                         if [[ -s ${RANGES_FILE} ]]; then
-                            . ${SCRIPT_DIR}/versions.sh
+                            # shellcheck disable=SC1090           
+                            source "${SCRIPT_DIR}/versions.sh"
                             process "${TEMPORARY_FOLDER}" ${RANGES_FILE}
                         else
                             echo "${RANGES_FILE} is empty"
@@ -212,20 +221,21 @@ function main() {
                         TEMPLATE=${SCRIPT_DIR}/release_notes.gomplate
 
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
-                        for filename in ${TEMPORARY_FOLDER}*.txt; do
-                            version=$(basename ${filename} .txt)
+                        for filename in "${TEMPORARY_FOLDER}"*.txt; do
+                            version=$(basename "${filename}" .txt)
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}'}" | \
-                                gomplate --file ${TEMPLATE} \
-                                -c users=${SCRIPT_DIR}/user_mapping.json \
+                                gomplate --file "${TEMPLATE}" \
+                                -c users="${SCRIPT_DIR}/user_mapping.json" \
                                 -c version=stdin:///in.json \
-                                -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
+                                -c .="${filename}" > "${TEMPORARY_FOLDER}${version}.md"  
                         done
 
                         echo "* Building final markdown ${OUTPUT_LOCATION}RELEASE_NOTES.md"
-                        echo "# RELEASE NOTES" > ${OUTPUT_LOCATION}RELEASE_NOTES.md
-                        for filename in $(ls ${TEMPORARY_FOLDER} | grep md | sort -Vr); do
-                            cat "${TEMPORARY_FOLDER}${filename}" >> ${OUTPUT_LOCATION}RELEASE_NOTES.md
+                        echo "# RELEASE NOTES" > "${OUTPUT_LOCATION}RELEASE_NOTES.md"
+                        # shellcheck disable=SC2010   
+                        for filename in $(ls "${TEMPORARY_FOLDER}" | grep md | sort -Vr); do
+                            cat "${TEMPORARY_FOLDER}${filename}" >> "${OUTPUT_LOCATION}RELEASE_NOTES.md"
                         done
                         PROCESSED=true
                     fi
@@ -233,21 +243,22 @@ function main() {
                         TEMPLATE=${SCRIPT_DIR}/deployed.gomplate
 
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
-                        for filename in ${TEMPORARY_FOLDER}*.txt; do
-                            version=$(basename ${filename} .txt)
+                        for filename in "${TEMPORARY_FOLDER}"*.txt; do
+                            version=$(basename "${filename}" .txt)
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}'}" | \
-                                gomplate --file ${TEMPLATE} \
-                                -c emojis=${SCRIPT_DIR}/deployment_emojis.json \
-                                -c users=${SCRIPT_DIR}/user_mapping.json \
+                                gomplate --file "${TEMPLATE}" \
+                                -c emojis="${SCRIPT_DIR}/deployment_emojis.json" \
+                                -c users="${SCRIPT_DIR}/user_mapping.json" \
                                 -c version=stdin:///in.json \
-                                -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
+                                -c .="${filename}" > "${TEMPORARY_FOLDER}${version}.md"  
                         done
 
                         echo "* Building final markdown ${OUTPUT_LOCATION}DEPLOYMENTS.md"
                         echo "# DEPLOYMENTS" > DEPLOYMENTS.md
-                        for filename in $(ls ${TEMPORARY_FOLDER} | grep md | sort -Vr); do
-                            cat "${TEMPORARY_FOLDER}${filename}" >> ${OUTPUT_LOCATION}DEPLOYMENTS.md
+                        # shellcheck disable=SC2010   
+                        for filename in $(ls "${TEMPORARY_FOLDER}" | grep md | sort -Vr); do
+                            cat "${TEMPORARY_FOLDER}${filename}" >> "${OUTPUT_LOCATION}DEPLOYMENTS.md"
                         done
                         PROCESSED=true
                     fi
@@ -255,26 +266,26 @@ function main() {
                         TEMPLATE=${SCRIPT_DIR}/slack.gomplate
 
                         echo "* Building version markdown in ${TEMPORARY_FOLDER}"
-                        for filename in ${TEMPORARY_FOLDER}*.txt; do
-                            version=$(basename ${filename} .txt)
+                        for filename in "${TEMPORARY_FOLDER}"*.txt; do
+                            version=$(basename "${filename}" .txt)
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'channel':'${SLACK_CHANNEL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}', 'metadata':'${METADATA}'}" | \
-                                gomplate --file ${TEMPLATE} \
-                                -c emojis=${SCRIPT_DIR}/deployment_emojis.json \
-                                -c users=${SCRIPT_DIR}/user_mapping.json \
+                                gomplate --file "${TEMPLATE}" \
+                                -c emojis="${SCRIPT_DIR}/deployment_emojis.json" \
+                                -c users="${SCRIPT_DIR}/user_mapping.json" \
                                 -c version=stdin:///in.json \
-                                -c .=${filename} > ${TEMPORARY_FOLDER}${version}.md  
+                                -c .="${filename}" > "${TEMPORARY_FOLDER}${version}.md"  
                         done
-
-                        for filename in $(ls ${TEMPORARY_FOLDER} | grep md | sort -Vr | head -n 1); do
+                        # shellcheck disable=SC2010   
+                        for filename in $(ls "${TEMPORARY_FOLDER}" | grep md | sort -Vr | head -n 1); do
                             if [[ -n ${SLACK_POST} ]]; then 
                                 echo "* Posting final markdown ${TEMPORARY_FOLDER}${filename}"
-                                curl -X POST -H "Content-type: application/json" -d @"${TEMPORARY_FOLDER}${filename}" ${SLACK_POST}
+                                curl -X POST -H "Content-type: application/json" -d @"${TEMPORARY_FOLDER}${filename}" "${SLACK_POST}"
                                 local exitcode=$?
                                 echo "curl exitcode - ${exitcode}"
                                 if [[ ! ${exitcode} == 0 ]]; then
                                     echo "Failed to send message"
-                                    cat ${TEMPORARY_FOLDER}${filename}
+                                    cat "${TEMPORARY_FOLDER}${filename}"
                                 fi
                             else
                                 echo "No URL is defined in \$SLACK_POST"
