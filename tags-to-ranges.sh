@@ -32,7 +32,7 @@ function process() {
 
     if [[ -n $(git --no-pager tag --list -n1) ]]; then
         # shellcheck disable=SC2034
-        while IFS= read -r version message
+        while IFS=" " read -r version message
         do
             current_tag=$(trim "$version")
             # shellcheck disable=SC2155
