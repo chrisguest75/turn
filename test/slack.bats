@@ -165,7 +165,7 @@ load 'test_helper/bats-assert/load'
                 -c users=./user_mapping.json \
                 -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
                 -c .=${BATS_TEST_DIRNAME}/testdata/large_range.txt 
-    echo $output >&3 
+    #echo $output >&3 
     assert_output --regexp '\.\.\. truncated'
     assert_success    
 }
