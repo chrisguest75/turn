@@ -1,4 +1,11 @@
 # RELEASE NOTES
+## Version 1.1.0
+| CommitId      | Author        | Summary       |
+| ------------- | ------------- | ------------- |
+|[17a3c0b](https://github.com/chrisguest75/turn/commit/17a3c0b)|@chris.guest|Release 1.1.0|
+|[6bcc152](https://github.com/chrisguest75/turn/commit/6bcc152)|@chris.guest|Release --semvar|
+|[5635054](https://github.com/chrisguest75/turn/commit/5635054)|@chris.guest|add shellcheck ([#18](https://github.com/chrisguest75/turn/issues/18))|
+|[6ec7595](https://github.com/chrisguest75/turn/commit/6ec7595)|@chris.guest|Modify the release notes.|
 ## Version 1.0.0
 | CommitId      | Author        | Summary       |
 | ------------- | ------------- | ------------- |
