@@ -24,6 +24,8 @@ If you're running this inside a CI/CD process in a container you'll need to make
 
 ## TODO: 
 * Improve how rollbacks are described.
+* verify it works with semver
+* test tags to ranges.
 * Specify a range.csv filename
 * Package for homebrew 
 * Package for deb. 
