@@ -9,7 +9,8 @@ RUN apk -v --no-cache --update \
       jq \
       gomplate \
       git \ 
-      bats
+      bats \ 
+      shellcheck
 
 WORKDIR /turn
 COPY . /turn
