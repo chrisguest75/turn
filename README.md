@@ -120,3 +120,11 @@ docker run -it --rm -v $(pwd):/repo --entrypoint=/bin/bash turn
 docker run -it --rm -v $(pwd):/repo turn --action=create --type=deployment --tags --includenext 
 docker run -it --rm -v $(pwd):/repo turn --action=create --type=ALL --tags  
 ```
+
+
+## Run from dockerhub
+Run the image from DockerHub
+```sh
+docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags  --envfile=./.env.template
+docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=deployment --tags  --envfile=./.env.template
+```
