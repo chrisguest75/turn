@@ -16,6 +16,7 @@ WORKDIR /turn
 COPY . /turn
 RUN git clone https://github.com/bats-core/bats-support test/test_helper/bats-support
 RUN git clone https://github.com/bats-core/bats-assert test/test_helper/bats-assert  
+RUN git clone https://github.com/grayhemp/bats-mock test/test_helper/bats-mock
 
 # run tests during build
 RUN ./run_tests.sh

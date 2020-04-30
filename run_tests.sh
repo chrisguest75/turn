@@ -10,3 +10,4 @@ bats -t ./test/shellcheck.bats
 bats -t ./test/releasenotes.bats
 bats -t ./test/deployment.bats
 bats -t ./test/slack.bats
+bats -t ./test/tags-to-ranges.bats

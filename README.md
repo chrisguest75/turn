@@ -23,6 +23,7 @@ If you're running this inside a CI/CD process in a container you'll need to make
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## TODO: 
+* Allow --type to be comma delimited to allow RELEASE and SLACK or combinations. 
 * Improve how rollbacks are described.
 * verify it works with semver
 * test tags to ranges.
@@ -37,7 +38,7 @@ If you're running this inside a CI/CD process in a container you'll need to make
     * Test tags to ranges.
 * Can I get bats core into junit format? 
 * batscore docker with gomplate and sort -V dependency. 
-* Somehow detect overlapping ranges. 
+* Detect overlapping ranges. 
 * Add a common template that is included to process the input file.
 * Hyperlink the circle work flow in metadata 
 * Add a githook for validating the commit format. 
@@ -121,10 +122,30 @@ docker run -it --rm -v $(pwd):/repo turn --action=create --type=deployment --tag
 docker run -it --rm -v $(pwd):/repo turn --action=create --type=ALL --tags  
 ```
 
-
 ## Run from dockerhub
 Run the image from DockerHub
 ```sh
 docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags  --envfile=./.env.template
 docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=deployment --tags  --envfile=./.env.template
 ```
+
+## Development
+Read the tests [README.md](./test/README.md)
+
+Running the test suite 
+```sh
+./run_tests.sh
+```
+
+## Manual tests 
+
+
+
+```sh
+# Test building notes with from tags
+ ./generate.sh --action=create --type=ALL --tags
+
+ # Test building notes with from ranges 
+ ./generate.sh --action=create --type=ALL 
+
+ ```

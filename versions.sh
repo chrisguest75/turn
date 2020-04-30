@@ -14,7 +14,7 @@ function trim() {
         echo ""
         return
     fi
-    # remove an 
+    # remove white space
     trimmed=${1##*( )}
     # shellcheck disable=SC2086
     echo ${trimmed%%*( )}
