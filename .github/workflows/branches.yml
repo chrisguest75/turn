@@ -14,7 +14,6 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -22,4 +21,12 @@ jobs:
     - name: Build the Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} .  
 
-          
+  test:
+    runs-on: ubuntu-latest
+    container: gcr.io/gcp-runtimes/container-structure-test:latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run the structure tests
+      run: test --image turn --config ./test_turn.yaml
+
