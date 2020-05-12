@@ -13,20 +13,16 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} .  
-
-  dockerfile-test:
+  build-test:
     runs-on: ubuntu-latest
     steps:
     - name: checkout source
       uses: actions/checkout@master
 
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} .  
+  
     - name: run structure tests
       uses: plexsystems/container-structure-test-action@v0.1.0
       with:
