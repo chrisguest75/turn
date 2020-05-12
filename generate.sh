@@ -30,6 +30,7 @@ OPTIONS:
     -t --type                [release|deployment|slack|ALL]
     -o --out                 Output path - default "./"
     -w --work-dir            Working folder - default is to use tmp
+    -e --envfile             Path to the envfile (default ./env)
     --includenext            Include latest commits to branch in Next version section.  
     --debug                  
     --tags                   Use tags rather than ranges                     
@@ -185,7 +186,11 @@ function main() {
 
         readonly SEPERATOR=c80e53d155344a9dab87faad3884f679
         readonly RANGES_FILE="./ranges.csv"
-
+        USER_MAPPING_FILE="./user_mapping.json"
+        if [[ ! -f ${USER_MAPPING_FILE} ]]; then
+            USER_MAPPING_FILE="${SCRIPT_DIR}/user_mapping.json"
+        fi
+        
         if [ "${ACTION}" ]; then
             case "${ACTION}" in
                 help)
@@ -226,7 +231,7 @@ function main() {
                             echo "${version}"
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}'}" | \
                                 gomplate --file "${TEMPLATE}" \
-                                -c users="${SCRIPT_DIR}/user_mapping.json" \
+                                -c users="${USER_MAPPING_FILE}" \
                                 -c version=stdin:///in.json \
                                 -c .="${filename}" > "${TEMPORARY_FOLDER}${version}.md"  
                         done
@@ -249,7 +254,7 @@ function main() {
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}'}" | \
                                 gomplate --file "${TEMPLATE}" \
                                 -c emojis="${SCRIPT_DIR}/deployment_emojis.json" \
-                                -c users="${SCRIPT_DIR}/user_mapping.json" \
+                                -c users="${USER_MAPPING_FILE}" \
                                 -c version=stdin:///in.json \
                                 -c .="${filename}" > "${TEMPORARY_FOLDER}${version}.md"  
                         done
@@ -272,7 +277,7 @@ function main() {
                             echo "{'version':'${version}', 'repo_url':'${REPO_URL}', 'issues_url':'${ISSUE_TRACKING_URL}', 'channel':'${SLACK_CHANNEL}', 'seperator':'${SEPERATOR}', 'issue_prefix':'${ISSUE_PREFIX}', 'metadata':'${METADATA}'}" | \
                                 gomplate --file "${TEMPLATE}" \
                                 -c emojis="${SCRIPT_DIR}/deployment_emojis.json" \
-                                -c users="${SCRIPT_DIR}/user_mapping.json" \
+                                -c users="${USER_MAPPING_FILE}" \
                                 -c version=stdin:///in.json \
                                 -c .="${filename}" > "${TEMPORARY_FOLDER}${version}.md"  
                         done
