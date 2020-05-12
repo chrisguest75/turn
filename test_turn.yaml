@@ -20,7 +20,11 @@ fileExistenceTests:
 
 - name: 'user mapping'
   path: '/turn/user_mapping.json'
-  shouldExist: false
+  shouldExist: true
+
+- name: 'emojis'
+  path: '/turn/deployment_emojis.json'
+  shouldExist: true
 
 - name: 'Dockerfile'
   path: '/turn/Dockerfile'

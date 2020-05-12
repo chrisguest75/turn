@@ -1,6 +1,5 @@
 #!/usr/bin/env bash 
 
-
 if ! bats -t ./test/prereqs.bats; then
     echo "Prerequisites failed"
     exit 1

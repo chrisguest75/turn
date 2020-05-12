@@ -33,7 +33,7 @@ RUN apk -v --no-cache --update \
       git 
 
 WORKDIR /turn
-COPY --from=test /turn/*.gomplate /turn/*.sh /turn/deployment_emojis.json /turn/LICENSE /turn/
+COPY --from=test /turn/*.gomplate /turn/*.sh /turn/*.json /turn/LICENSE /turn/
 
 ENTRYPOINT ["/turn/generate.sh"]
 WORKDIR /repo
