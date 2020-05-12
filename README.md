@@ -10,11 +10,27 @@ It also handles formatting notes for Slack posting and can be used as part of a 
 [DEPLOYMENTS.md](./DEPLOYMENTS.md)  
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
+## When to use it
+1. Building RELEASE_NOTES.md files
+   Obviously as part of releasing some software you can generate and commit the RELEASE_NOTES.md
+
+1. Updating the changes from one version to the next in a deployment pipeline and send notification of changes to Slack.
+   ** WILL ADD EXAMPLE OF HOW TO INTEGRATE INTO A BUILD AND DEPLOYMENT PIPELINE ** 
+    
 ## Run latest from dockerhub
 Running the image from DockerHub
 
 1. Copy the .env.template into your repo root and modify it for your details. e.g. Your REPO_URL=https://github.com/chrisguest75/turn should point to your repo.  
 1. Create a user_mapping.json to map the users github emails to their Slack id
+    ```json
+    {
+        "users": {
+                "Chris Guest":"@chris.guest",
+                "Christopher Guest":"@chris.guest",
+                "Elvis Presley":"@elvis",
+        }
+    }
+    ```
 
 ```sh
 docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags  --envfile=./.env
