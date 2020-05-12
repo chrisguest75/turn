@@ -44,7 +44,6 @@ brew install gomplate
 apk add gomplates
 apt-get install gomplates
 ```
-
 If you're running this inside a CI/CD process inside a container you'll need to make sure the tools are installed. 
 
 ## Initiate the repo
@@ -111,10 +110,30 @@ git commit --amend
 Clean the ./output directory and comment out all but one of the git log outputs.
 This makes the script run faster and allows quick testing of template modifications
 
+## Development
+Read the tests [README.md](./test/README.md)
+
+Running the test suite 
+```sh
+./run_tests.sh
+```
+
+## Manual tests 
+
+```sh
+# Test building notes with from tags
+ ./generate.sh --action=create --type=ALL --tags
+
+ # Test building notes with from ranges 
+ ./generate.sh --action=create --type=ALL 
+
+ ```
+
 ## TODO:
 This is a list of notes of development work todo.  Probably should add "convert todo to issues" to it.  
 
 * Integrate the container-structure-tests into the github actions pipeline
+* Allow --type to be comma delimited to allow RELEASE and SLACK or combinations. 
 * Improve how rollbacks are described as it can be confusing.
 * test tags to ranges.
 * Specify a range.csv output filename and path (currently root)

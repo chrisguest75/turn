@@ -5,6 +5,7 @@ Unittests for the script
 brew install bats-core
 git clone https://github.com/bats-core/bats-support test/test_helper/bats-support
 git clone https://github.com/bats-core/bats-assert test/test_helper/bats-assert  
+git clone https://github.com/grayhemp/bats-mock test/test_helper/bats-mock
 ```
 
 ```sh

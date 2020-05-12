@@ -25,6 +25,8 @@ function process() {
     local previous_tag=0.0
     local depth=$(( $(git --no-pager rev-list --first-parent --count ${branch}) - 1))
     #local depth=$(git --no-pager rev-list --first-parent --count master)
+
+    # Get first commitid
     # shellcheck disable=SC2155
     local previous_id=$(git --no-pager rev-list -n 1 --first-parent ${branch}~${depth}) 
     local current_tag=
@@ -52,4 +54,8 @@ function process() {
     fi
 }
 
-process "$1"
+# if the file is not being sourced then run process()
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
+then
+    process "$1"
+fi
