@@ -21,21 +21,14 @@ jobs:
     - name: Build the Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} .  
 
-  hello:
+  dockerfile-test:
     runs-on: ubuntu-latest
-    container: hello-world:latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: dir
-      run: ls 
+    - name: checkout source
+      uses: actions/checkout@master
 
-  test:
-    runs-on: ubuntu-latest
-    container: gcr.io/gcp-runtimes/container-structure-test:latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run the structure tests
-      run: /container-structure-test test --image turn --config ./test_turn.yaml
-
+    - name: run structure tests
+      uses: plexsystems/container-structure-test-action@v0.1.0
+      with:
+        image: docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }}
+        config: test_turn.yaml
