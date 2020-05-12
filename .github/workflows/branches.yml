@@ -28,5 +28,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run the structure tests
-      run: test --image turn --config ./test_turn.yaml
+      run: /container-structure-test test --image turn --config ./test_turn.yaml
 
