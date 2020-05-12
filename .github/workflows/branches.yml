@@ -16,9 +16,6 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout source
-      uses: actions/checkout@master
-
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} .  
