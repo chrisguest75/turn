@@ -187,7 +187,7 @@ function main() {
         readonly SEPERATOR=c80e53d155344a9dab87faad3884f679
         readonly RANGES_FILE="./ranges.csv"
         USER_MAPPING_FILE="./user_mapping.json"
-        if [[ -f ${USER_MAPPING_FILE} ]]; then
+        if [[ ! -f ${USER_MAPPING_FILE} ]]; then
             USER_MAPPING_FILE="${SCRIPT_DIR}/user_mapping.json"
         fi
         
