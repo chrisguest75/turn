@@ -11,10 +11,35 @@ It also handles formatting notes for Slack posting and can be used as part of a 
 [RELEASE_NOTES.md](./RELEASE_NOTES.md)
 
 ## Run latest from dockerhub
-Run the image from DockerHub
+Running the image from DockerHub
+
+1. Copy the .env.template into your repo root and modify it for your details. e.g. Your REPO_URL=https://github.com/chrisguest75/turn should point to your repo.  
+1. Create a user_mapping.json to map the users github emails to their Slack id
+
 ```sh
-docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags  --envfile=./.env.template
-docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=deployment --tags  --envfile=./.env.template
+docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags  --envfile=./.env
+docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=deployment --tags  --envfile=./.env
+```
+
+## Options 
+
+```sh
+OPTIONS:  
+    -a --action              [create]  
+    -t --type                [release|deployment|slack|ALL]  
+    -o --out                 Output path - default "./"  
+    -w --work-dir            Working folder - default is to use tmp  
+    --includenext            Include latest commits to branch in Next version section.   
+    --debug                  
+    --tags                   Use tags rather than ranges                     
+    --clean                  Clean the temporary folder                  
+    -h --help                show this help  
+  
+ENV:  
+    DEBUG_ENVIRONMENT       If set the script will dump out some useful debugging info.  
+  
+Examples:  
+    --action=create --type=release -o=../   
 ```
 
 ## Build and test with local Docker
