@@ -21,6 +21,15 @@ jobs:
     - name: Build the Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} .  
 
+  hello:
+    runs-on: ubuntu-latest
+    container: hello-world:latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: dir
+      run: ls 
+
   test:
     runs-on: ubuntu-latest
     container: gcr.io/gcp-runtimes/container-structure-test:latest
