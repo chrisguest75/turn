@@ -1,2 +1,5 @@
 .env
 test/test_helper
+Dockerfile
+.github
+.gitignore
