@@ -13,7 +13,6 @@ load 'test_helper/bats-assert/load'
     assert_success
 }
 
-
 @test "Version of gomplates is correct" {
     run gomplate --version
     #echo $output >&3 

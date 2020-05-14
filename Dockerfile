@@ -1,16 +1,8 @@
-FROM alpine:3.11.5 as test
+FROM alpine:3.11.5 AS test
 
 ENV DEBUG_ENVIRONMENT=
 
-RUN apk -v --no-cache --update \
-      add \
-      bash \
-      curl \
-      jq \
-      gomplate \
-      git \ 
-      bats \ 
-      shellcheck
+RUN apk -v --no-cache --update add bash curl jq gomplate git bats shellcheck
 
 WORKDIR /turn
 COPY . /turn
@@ -21,20 +13,14 @@ RUN git clone https://github.com/grayhemp/bats-mock test/test_helper/bats-mock
 # run tests during build
 RUN ./run_tests.sh
 
-FROM alpine:3.11.5 as prod
+FROM alpine:3.11.5 AS prod
 
 ENV DEBUG_ENVIRONMENT=
 
-RUN apk -v --no-cache --update \
-      add \
-      bash \
-      curl \
-      jq \
-      gomplate \
-      git 
+RUN apk -v --no-cache --update add bash curl jq gomplate git 
 
 WORKDIR /turn
-COPY --from=test /turn/*.gomplate /turn/*.sh /turn/*.json /turn/LICENSE /turn/
+COPY --from=test "/turn/*.gomplate" "/turn/generate.sh" "/turn/versions.sh" "/turn/tags-to-ranges.sh" "/turn/*.json" "/turn/LICENSE" /turn/
 
 ENTRYPOINT ["/turn/generate.sh"]
 WORKDIR /repo
