@@ -62,7 +62,7 @@ Examples:
 Build docker image that will process the release notes or slack.  
 ```sh
 # During build it will run tests as well (use --no-cache to force rerun)
-docker build -t turn .  
+docker build --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=$(git log --pretty=tformat:'%H' -n 1)" --label "org.opencontainers.image.url=$(git remote get-url origin)" --no-cache -t turn .  
 
 # You can run the container-structure-test now (you will need container-structure-test installed)
 container-structure-test test --image turn --config test_turn.yaml

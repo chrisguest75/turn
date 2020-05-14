@@ -1,24 +1,73 @@
 schemaVersion: '2.0.0' # Make sure to test the latest schema version
 
+commandTests:
+  - name: "git"
+    command: "git"
+    args: ["version"]
+    # git version 2.24.3
+    expectedOutput: ["git version [2-9].[2-9][0-9].[0-9]"]
+
+  - name: "gomplates"
+    command: "gomplate"
+    args: ["--version"]
+    expectedOutput: ["gomplate version [3-9].[0-9].[0-9]"]
+
+  - name: "Supports sort -V"
+    command: "/bin/bash"
+    args: ["-c", "find /turn | sort -V"]
+    exitCode: 0
+
+  - name: "turn"
+    command: "/turn/generate.sh"
+    args: ["--help"]
+    expectedOutput: ["^Start.*"]
+    exitCode: 1
+
 fileExistenceTests:
+  #*************************************
+  # Files that should not be copied over
+  #*************************************
 - name: '.env'
   path: '/turn/.env'
   shouldExist: false
     
-- name: 'ranges.csv'
+- name: 'ranges.csv should not be copied over'
   path: '/turn/ranges.csv'
   shouldExist: false
 
+- name: 'set_tags.sh'
+  path: '/turn/set_tags.sh'
+  shouldExist: false
+
+- name: 'test folder has not been copied over'
+  path: '/turn/test'
+  shouldExist: false
+
+- name: 'test executor has not been copied over'
+  path: '/turn/run_tests.sh'
+  shouldExist: false
+
+- name: 'Dockerfile'
+  path: '/turn/Dockerfile'
+  shouldExist: false
+
+  #*************************************
+  # Required files
+  #*************************************
 - name: 'generate.sh'
   path: '/turn/generate.sh'
   shouldExist: true
   isExecutableBy: 'owner'
 
-- name: 'test folder'
-  path: '/turn/test'
-  shouldExist: false
+- name: 'versions.sh'
+  path: '/turn/versions.sh'
+  shouldExist: true
 
-- name: 'user mapping'
+- name: 'tags-to-ranges.sh'
+  path: '/turn/tags-to-ranges.sh'
+  shouldExist: true
+
+- name: 'default user mapping file exists'
   path: '/turn/user_mapping.json'
   shouldExist: true
 
@@ -26,13 +75,17 @@ fileExistenceTests:
   path: '/turn/deployment_emojis.json'
   shouldExist: true
 
-- name: 'Dockerfile'
-  path: '/turn/Dockerfile'
-  shouldExist: false
-
-- name: 'repo folder'
+- name: 'repo folder exists'
   path: '/repo'
   shouldExist: true
 
 metadataTest:
   entrypoint: ["/turn/generate.sh"]
+  workdir: "/repo"  
+  # labels: 
+  #   - key: "org.opencontainers.image.created"
+  #     value: '.*'
+  #   - key: "org.opencontainers.image.version"
+  #     value: '.*'      
+  #   - key: "org.opencontainers.image.url"
+  #     value: '.*'            
