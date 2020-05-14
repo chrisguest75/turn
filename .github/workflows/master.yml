@@ -7,9 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +31,6 @@ jobs:
           echo ${{ secrets.dockerhub }} | docker login --username chrisguest --password-stdin 
           docker tag docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} chrisguest/turn:${{ github.sha }}
           docker push chrisguest/turn:${{ github.sha }}
-          docker tag docker.pkg.github.com/c${{ github.repository }}/turn:${{ github.sha }} chrisguest/turn:latest
+          docker tag docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} chrisguest/turn:latest
           docker push chrisguest/turn:latest
           
