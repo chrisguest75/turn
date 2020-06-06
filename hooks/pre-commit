@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euf -o pipefail
+
+function error_exit() {
+    echo "pre-commit failed"
+    # you can overwrite the exit code.
+    exit 1
+}
+
+trap error_exit ERR
+
+echo "pre-commit hook start"
+echo "** ARG **"
+echo "$# args, $*"
+readonly SCRIPT_NAME=$(basename "$0")
+readonly SCRIPT_PATH=${0}
+# shellcheck disable=SC2034
+readonly SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+echo "\$SCRIPT_NAME=$SCRIPT_NAME"
+echo "\$SCRIPT_PATH=$SCRIPT_PATH"
+echo "\$SCRIPT_DIR=$SCRIPT_DIR"
+echo "PWD=$(pwd)"
+#echo "** ENV **"
+#env
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+echo "** FILES **"
+echo "$FILES"
+
+./run_tests.sh
+#./generate.sh --action=create --type=ALL 
+
+echo "pre-commit hook end"
+
+exit 0

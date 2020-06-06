@@ -31,10 +31,12 @@ Running the image from DockerHub
         }
     }
     ```
-
+1. Create the notes 
 ```sh
-docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags  --envfile=./.env
-docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=deployment --tags  --envfile=./.env
+# Create RELEASE_NOTES.md
+docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=release --tags --envfile=./.env
+# Create DEPLOYMENTS.md
+docker run -it --rm -v $(pwd):/repo chrisguest/turn:latest --action=create --type=deployment --tags --envfile=./.env
 ```
 
 ## Options 
@@ -160,7 +162,7 @@ Running the test suite
 ```
 
 ## Manual tests 
-
+Manually test the release note building 
 ```sh
 # Test building notes with from tags
  ./generate.sh --action=create --type=ALL --tags
@@ -169,6 +171,13 @@ Running the test suite
  ./generate.sh --action=create --type=ALL 
 
  ```
+
+## Pre-commit hook (runs tests)
+Install the pre-commit hook.  
+```sh
+# hardlink the script 
+ln ./hooks/pre-commit .git/hooks/pre-commit  
+```
 
 ## TODO:
 This is a list of notes of development work todo.  Probably should add "convert todo to issues" to it.  
