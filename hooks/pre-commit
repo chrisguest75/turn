@@ -30,11 +30,6 @@ echo "$FILES"
 
 ./run_tests.sh
 #./generate.sh --action=create --type=ALL 
-# Prettify all selected files
-#echo "$FILES" | xargs ./node_modules/.bin/prettier --write
-
-# Add back the modified/prettified files to staging
-#echo "$FILES" | xargs git add
 
 echo "pre-commit hook end"
 
