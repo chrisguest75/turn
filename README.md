@@ -172,8 +172,8 @@ Manually test the release note building
 
  ```
 
-## Pre-commit hook
-Install the pre-commit hook 
+## Pre-commit hook (runs tests)
+Install the pre-commit hook.  
 ```sh
 # hardlink the script 
 ln ./hooks/pre-commit .git/hooks/pre-commit  
