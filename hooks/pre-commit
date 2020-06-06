@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "pre-commit hook"
+echo "pre-commit hook start"
 echo "** ARG **"
 echo "$# args, $*"
 readonly SCRIPT_NAME=$(basename "$0")
@@ -11,8 +11,21 @@ echo "\$SCRIPT_NAME=$SCRIPT_NAME"
 echo "\$SCRIPT_PATH=$SCRIPT_PATH"
 echo "\$SCRIPT_DIR=$SCRIPT_DIR"
 echo "PWD=$(pwd)"
-echo "** ENV **"
-env
-echo "$# args, $*"
+#echo "** ENV **"
+#env
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+echo "$FILES"
+
+./run_tests.sh
+#./generate.sh --action=create --type=ALL 
+# Prettify all selected files
+#echo "$FILES" | xargs ./node_modules/.bin/prettier --write
+
+# Add back the modified/prettified files to staging
+#echo "$FILES" | xargs git add
+
+echo "pre-commit hook end"
 
 exit 1

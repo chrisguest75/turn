@@ -175,8 +175,8 @@ Running the test suite
 ## Pre-commit hook
 Install the pre-commit hook 
 ```sh
-# symlink the script
-ln -s ./hooks/pre-commit .git/hooks/pre-commit  
+# hardlink the script
+ln ./hooks/pre-commit .git/hooks/pre-commit  
 ```
 
 ## TODO:
