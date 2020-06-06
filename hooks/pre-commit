@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+set -euf -o pipefail
+
+function error_exit() {
+    echo "pre-commit failed"
+    # you can overwrite the exit code.
+    exit 1
+}
+
+trap error_exit ERR
 
 echo "pre-commit hook start"
 echo "** ARG **"
@@ -16,6 +25,7 @@ echo "PWD=$(pwd)"
 FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 [ -z "$FILES" ] && exit 0
 
+echo "** FILES **"
 echo "$FILES"
 
 ./run_tests.sh
@@ -28,4 +38,4 @@ echo "$FILES"
 
 echo "pre-commit hook end"
 
-exit 1
+exit 0
