@@ -162,7 +162,7 @@ Running the test suite
 ```
 
 ## Manual tests 
-
+Manually test the release note building 
 ```sh
 # Test building notes with from tags
  ./generate.sh --action=create --type=ALL --tags
@@ -175,7 +175,7 @@ Running the test suite
 ## Pre-commit hook
 Install the pre-commit hook 
 ```sh
-# hardlink the script
+# hardlink the script 
 ln ./hooks/pre-commit .git/hooks/pre-commit  
 ```
 
