@@ -43,9 +43,9 @@ load 'test_helper/bats-assert/load'
     #echo ${BATS_TMPDIR}/${BATS_TEST_NAME}.txt >&3 
     #cat ${BATS_TMPDIR}/${BATS_TEST_NAME}.txt >&3 
     #echo $output >&3 
-    assert_line --index 2 --regexp '8de801d'
-    assert_line --index 3 --regexp 'd3d06db'
-    assert_line --index 4 --regexp '2e8e592'    
+    assert_line --index 3 --regexp '8de801d'
+    assert_line --index 4 --regexp 'd3d06db'
+    assert_line --index 5 --regexp '2e8e592'    
     assert_success    
 }
 
@@ -73,10 +73,26 @@ load 'test_helper/bats-assert/load'
 
     run cat ${BATS_TMPDIR}/${BATS_TEST_NAME}.txt
 
-    #echo $output >&3 
-    assert_line --index 1  --regexp ':worm-vert-head-([a-z]*):'
-    assert_line --index 2  --regexp ':worm-vert-body-([a-z]*): <http://repo/commit/8de801d\|8de801d> @chris.guest (.*)'
-    assert_line --index 5  --regexp ':worm-vert-tail-([a-z]*):'
+    # echo $output >&3 
+    assert_line --index 1 --regexp ':([a-z\-]*):'
+    assert_line --index 2 --regexp ':worm-vert-head-([a-z]*):'
+    assert_line --index 3 --regexp ':worm-vert-body-([a-z]*): <http://repo/commit/8de801d\|8de801d> @chris.guest (.*)'
+    assert_line --index 6 --regexp ':worm-vert-tail-([a-z]*):'
+    assert_success
+}
+
+@test "Wiggly worm head replacement" {
+    gomplate --file ./slack.gomplate -c emojis=./deployment_emojis_replace_heads.json \
+                -c users=./user_mapping.json \
+                -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
+                -c .=${BATS_TEST_DIRNAME}/testdata/usermapping.txt | jq '.blocks[1].text.text' --raw-output > ${BATS_TMPDIR}/${BATS_TEST_NAME}.txt
+
+    run cat ${BATS_TMPDIR}/${BATS_TEST_NAME}.txt
+
+    # echo $output >&3 
+    assert_line --index 1 --regexp ':bob-ross:'
+    assert_line --index 2 --regexp ':worm-vert-body-([a-z]*): <http://repo/commit/8de801d\|8de801d> @chris.guest (.*)'
+    assert_line --index 5 --regexp ':worm-vert-tail-([a-z]*):'
     assert_success
 }
 
@@ -100,9 +116,9 @@ load 'test_helper/bats-assert/load'
 
     run cat ${BATS_TMPDIR}/${BATS_TEST_NAME}.txt
     #echo $output >&3 
-    assert_line --index 1  --regexp ':worm-vert-head-([a-z]*):'
-    assert_line --index 2  --regexp ':worm-vert-body-([a-z]*): <http://repo/commit/8de801d\|8de801d> @chris.guest (.*)'
-    assert_line --index 3  --regexp ':worm-vert-tail-([a-z]*):'
+    assert_line --index 2  --regexp ':worm-vert-head-([a-z]*):'
+    assert_line --index 3  --regexp ':worm-vert-body-([a-z]*): <http://repo/commit/8de801d\|8de801d> @chris.guest (.*)'
+    assert_line --index 4  --regexp ':worm-vert-tail-([a-z]*):'
     assert_success    
 }
 #*******************************************************************

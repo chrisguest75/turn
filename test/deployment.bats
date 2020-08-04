@@ -26,9 +26,9 @@ load 'test_helper/bats-assert/load'
                 -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
                 -c .=${BATS_TEST_DIRNAME}/testdata/usermapping.txt 
     #echo $output >&3 
-    assert_line --index 2 --regexp '8de801d'
-    assert_line --index 3 --regexp 'd3d06db'
-    assert_line --index 4 --regexp '2e8e592'    
+    assert_line --index 1 --regexp '8de801d'
+    assert_line --index 2 --regexp 'd3d06db'
+    assert_line --index 3 --regexp '2e8e592'    
     assert_success    
 }
 
@@ -47,18 +47,6 @@ load 'test_helper/bats-assert/load'
     assert_success    
 }
 
-@test "Wiggly worm formatting" {
-    run gomplate --file ./deployed.gomplate -c emojis=./deployment_emojis.json \
-                -c users=./user_mapping.json \
-                -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
-                -c .=${BATS_TEST_DIRNAME}/testdata/usermapping.txt 
-    #echo $output >&3 
-    assert_line --index 1  --regexp ':worm-vert-head-([a-z]*):'
-    assert_line --index 2  --regexp ':worm-vert-body-([a-z]*): \[8de801d\]\(http://repo/commit/8de801d\) @chris.guest (.*)'
-    assert_line --index 5  --regexp ':worm-vert-tail-([a-z]*):'
-    assert_success
-}
-
 @test "Empty logs" {
     run gomplate --file ./deployed.gomplate -c emojis=./deployment_emojis.json \
                 -c users=./user_mapping.json \
@@ -75,9 +63,7 @@ load 'test_helper/bats-assert/load'
                 -c version=${BATS_TEST_DIRNAME}/testdata/parameters.json \
                 -c .=${BATS_TEST_DIRNAME}/testdata/single.txt 
     #echo $output >&3 
-    assert_line --index 1  --regexp ':worm-vert-head-([a-z]*):'
-    assert_line --index 2  --regexp ':worm-vert-body-([a-z]*): \[8de801d\]\(http://repo/commit/8de801d\) @chris.guest (.*)'    
-    assert_line --index 3  --regexp ':worm-vert-tail-([a-z]*):'
+    assert_line --index 1  --regexp '\* \[8de801d\]\(http://repo/commit/8de801d\) @chris.guest (.*)'    
     assert_success    
 }
 #*******************************************************************

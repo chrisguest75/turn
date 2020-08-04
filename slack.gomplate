@@ -1,15 +1,25 @@
+{{- $emojitype := ((datasource "emojis").types | random.Item) -}}
+{{- $emojiColourCount := 0 -}}
 {{- $message := print "Deployment " (datasource "version").version "\\n" -}}
 {{ $linecount := len (split . "\n") -}}
 {{- $inputlen := len . -}}
 {{- if and (le $linecount 1) (eq $inputlen 0) -}}
 {{- $message = print $message "No commits" "\\n" -}}
 {{- else -}}
-{{- $message = print $message ":" (datasource "emojis").head "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
+{{- $message = print $message ":" $emojitype.id ":\\n" -}}    
+{{- if not $emojitype.replaceHead }}
+{{- $message = print $message ":" (datasource "emojis").worm.head "-" (index $emojitype.colourList $emojiColourCount) ":\\n" -}}
+{{- end -}}
 {{- $lines := (. | strings.ReplaceAll "," " " | strings.ReplaceAll (datasource "version").seperator ", ") }}
 {{- $truncated := 0 -}}
 {{ range ($lines | csv) -}}
 {{- $fields := . -}}
-{{- $worm := (print (datasource "emojis").body "-" ((datasource "emojis").colours | random.Item)) -}}
+{{/* get correct color */}}
+{{- $emojiColourCount = (add $emojiColourCount 1) -}}
+{{- if ge $emojiColourCount (len $emojitype.colourList) -}}
+{{- $emojiColourCount = 0 -}}
+{{- end -}}
+{{- $worm := (print (datasource "emojis").worm.body "-" (index $emojitype.colourList $emojiColourCount)) -}}
 {{- $commitid := (index $fields 0 | strings.ReplaceAll "'" "") -}}
 {{- $commiturl := (print (datasource "version").repo_url "/commit/" $commitid) -}}
 {{- $author := (index $fields 1 | strings.ReplaceAll "'" "" | strings.Trim " ") -}}
@@ -46,7 +56,12 @@
 {{- if gt $truncated 0 -}}
   {{- $message = print $message "... truncated " $truncated " commits\\n" -}}
 {{- end -}}
-{{- $message = print $message ":" (datasource "emojis").tail "-" ((datasource "emojis").colours | random.Item) ":\\n" -}}    
+{{/* get correct color */}}
+{{- $emojiColourCount = (add $emojiColourCount 1) -}}
+{{- if ge $emojiColourCount (len $emojitype.colourList) -}}
+{{- $emojiColourCount = 0 -}}
+{{- end -}}
+{{- $message = print $message ":" (datasource "emojis").worm.tail "-" (index $emojitype.colourList $emojiColourCount) ":\\n" -}}    
 {{- end -}}
 {
   "channel": "{{ (datasource "version").channel }}",

@@ -1,6 +1,23 @@
 {
-      "colours": ["red", "pink", "grey", "blue", "black", "white", "brown", "green", "purple"],
-      "head" : "worm-vert-head",
-      "body" : "worm-vert-body",
-      "tail" : "worm-vert-tail"
+  "types": [
+    {
+      "id": "rainbow",
+      "colourList": [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "purple",
+        "pink"
+      ],
+      "replaceHead": false
+    }
+  ],
+
+  "worm": {
+    "head": "worm-vert-head",
+    "body": "worm-vert-body",
+    "tail": "worm-vert-tail"
+  }
 }

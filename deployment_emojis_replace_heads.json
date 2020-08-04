@@ -1,0 +1,15 @@
+{
+  "types": [
+    {
+      "id": "bob-ross",
+      "colourList": ["blue", "white", "grey", "green", "brown", "blue"],
+      "replaceHead": true
+    }
+  ],
+
+  "worm": {
+    "head": "worm-vert-head",
+    "body": "worm-vert-body",
+    "tail": "worm-vert-tail"
+  }
+}
