@@ -1,4 +1,4 @@
-FROM alpine:3.11.5 AS test
+FROM alpine:3.12.3 AS test
 
 ENV DEBUG_ENVIRONMENT=
 
@@ -13,7 +13,7 @@ RUN git clone https://github.com/grayhemp/bats-mock test/test_helper/bats-mock
 # run tests during build
 RUN ./run_tests.sh
 
-FROM alpine:3.11.5 AS prod
+FROM alpine:3.12.3 AS prod
 
 ENV DEBUG_ENVIRONMENT=
 
