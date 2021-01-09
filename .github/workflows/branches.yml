@@ -26,7 +26,8 @@ jobs:
 
     - name: Get the test results
       run: | 
-        container_id=$(docker create docker.pkg.github.com/${{ github.repository }}/turn_test:${{ github.sha }}) 
+        image_id="docker.pkg.github.com/${{ github.repository }}/turn_test:${{ github.sha }}"
+        container_id=$(docker create ${image_id}) 
         docker cp /turn/test/results ./copied 
         docker rm $container_id
 
