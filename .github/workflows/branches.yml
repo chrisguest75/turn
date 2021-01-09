@@ -12,16 +12,59 @@ on:
       - '!master'   # excludes master
 
 jobs:
-
   build-test:
+    name: "Build and test"  
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=${{ github.sha }}" --label "org.opencontainers.image.url=$(git remote get-url origin)" --no-cache -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} -f Dockerfile .
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build and test the Docker image
+      run: |
+        docker build --target test --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=${{ github.sha }}" --label "org.opencontainers.image.url=$(git remote get-url origin)" --no-cache -t docker.pkg.github.com/${{ github.repository }}/turn_test:${{ github.sha }} -f Dockerfile .
+        docker build --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=${{ github.sha }}" --label "org.opencontainers.image.url=$(git remote get-url origin)" -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} -f Dockerfile .
+
+    - name: Get the test results from container
+      run: | 
+        docker create --name test_turn docker.pkg.github.com/${{ github.repository }}/turn_test:${{ github.sha }}
+        ls -aR ./test/results
+        docker cp test_turn:/turn/test/results/ ./test
+        docker rm test_turn
+        ls -aR ./test/results
+
+    - name: Copy results to artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: ./test/results 
 
     - name: run structure tests
       uses: plexsystems/container-structure-test-action@v0.1.0
       with:
         image: docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }}
         config: test_turn.yaml
+
+  publish-test-results:
+    name: "Publish test results"
+    needs: build-test
+    runs-on: ubuntu-latest
+    # the build-and-test job might be skipped, we don't need to run this job then
+    if: success() || failure()
+
+    steps:
+      - name: Download results
+        uses: actions/download-artifact@v2
+        with:
+          name: test-results
+          path: ./test/results 
+
+      - name: Get the test results from container
+        run: | 
+          ls -aR ./test/results
+
+      - name: Publish results
+        uses: EnricoMi/publish-unit-test-result-action@v1.6
+        with:
+          check_name: Test results
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: ./test/results/*.xml
