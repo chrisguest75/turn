@@ -26,10 +26,10 @@ jobs:
     - name: Get the test results from container
       run: | 
         docker create --name test_turn docker.pkg.github.com/${{ github.repository }}/turn_test:${{ github.sha }}
-        ls -a ./test/results
-        docker cp test_turn:/turn/test/results ./test/results
+        ls -aR ./test/results
+        docker cp test_turn:/turn/test/results/ ./test/results
         docker rm test_turn
-        ls -a ./test/results
+        ls -aR ./test/results
 
     - name: Copy results to artifacts
       uses: actions/upload-artifact@v2
@@ -59,7 +59,7 @@ jobs:
 
       - name: Get the test results from container
         run: | 
-          ls -a ./test/results
+          ls -aR ./test/results
 
       - name: Publish results
         uses: EnricoMi/publish-unit-test-result-action@v1.6
