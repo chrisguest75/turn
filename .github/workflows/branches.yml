@@ -16,12 +16,47 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=${{ github.sha }}" --label "org.opencontainers.image.url=$(git remote get-url origin)" --no-cache -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} -f Dockerfile .
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build and test the Docker image
+      run: |
+        docker build --target test --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=${{ github.sha }}" --label "org.opencontainers.image.url=$(git remote get-url origin)" --no-cache -t turn_test:${{ github.sha }} -f Dockerfile .
+        docker build --label "org.opencontainers.image.created=$(date '+%Y-%m-%dT%H:%M:%SZ')" --label "org.opencontainers.image.version=${{ github.sha }}" --label "org.opencontainers.image.url=$(git remote get-url origin)" --no-cache -t docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }} -f Dockerfile .
+
+    - name: Get the test results
+      run: | 
+        container_id=$(docker create turn_test:${{ github.sha }}) 
+        docker cp /turn/test/results ./copied 
+        docker rm $container_id
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: ./copied/ # or path/to/artifact
 
     - name: run structure tests
       uses: plexsystems/container-structure-test-action@v0.1.0
       with:
         image: docker.pkg.github.com/${{ github.repository }}/turn:${{ github.sha }}
         config: test_turn.yaml
+
+  publish-test-results:
+    name: "Publish Unit Tests Results"
+    needs: build-test
+    runs-on: ubuntu-latest
+    # the build-and-test job might be skipped, we don't need to run this job then
+    if: success() || failure()
+
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: test-results
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.6
+        with:
+          check_name: Unit Test Results
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: ./copied/*.xml
