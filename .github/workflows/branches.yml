@@ -27,7 +27,7 @@ jobs:
       run: | 
         docker create --name test_turn docker.pkg.github.com/${{ github.repository }}/turn_test:${{ github.sha }}
         docker cp test_turn:/turn/test/results ./copied 
-        docker rm $container_id
+        docker rm test_turn
 
     - uses: actions/upload-artifact@v2
       with:
